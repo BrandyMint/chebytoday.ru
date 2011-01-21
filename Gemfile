@@ -25,7 +25,7 @@ gem 'stateful_link', :git => 'git://github.com/dapi/stateful_link.git'
 gem "exception_notification"
 gem 'mail'
 
-gem "devise", :git => "git://github.com/plataformatec/devise.git", :branch => 'omniauth'
+gem "devise", :git => "git://github.com/plataformatec/devise.git", :branch => 'v1.2.oauth' # , :branch => 'omniauth'
 
 gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git'
 #gem 'rails_admin', :path => '/home/danil/code/gems/rails_admin'

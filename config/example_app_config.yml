@@ -1,0 +1,27 @@
+
+development:
+  domain: localhost:3000
+  twitter:
+    login: chebytoday
+    password: password
+    token: token
+    secret: secret
+
+scheduler:
+  domain: localhost:3000
+  twitter:
+    login: chebytoday
+    password: password
+    token: token
+    secret: secret
+
+test:
+  domain: test.host
+
+production:
+  domain: example.com
+  twitter:
+    login: chebytoday
+    password: password
+    token: token
+    secret: secret

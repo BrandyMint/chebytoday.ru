@@ -1,0 +1,4 @@
+= will_paginate( @twits, :params => {:controller=>'twits'})
+#twit_list
+  = render :partial => 'twits/twit', :collection=>@twits
+= will_paginate( @twits, :params => {:controller=>'twits'})

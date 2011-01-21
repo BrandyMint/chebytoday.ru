@@ -1,0 +1,64 @@
+- form_for @twit do |f|
+  = f.error_messages
+  %p
+    = f.label :text
+    %br
+    = f.text_area :text
+  %p
+    = f.label :status_id
+    %br
+    = f.text_field :status_id
+  %p
+    = f.label :created_at
+    %br
+    = f.datetime_select :created_at
+  %p
+    = f.label :favorited
+    %br
+    = f.check_box :favorited
+  %p
+    = f.label :place
+    %br
+    = f.text_field :place
+  %p
+    = f.label :retweeted_status
+    %br
+    = f.text_area :retweeted_status
+  %p
+    = f.label :geo
+    %br
+    = f.text_field :geo
+  %p
+    = f.label :truncated
+    %br
+    = f.check_box :truncated
+  %p
+    = f.label :source
+    %br
+    = f.text_field :source
+  %p
+    = f.label :contributors
+    %br
+    = f.text_field :contributors
+  %p
+    = f.label :coordinated
+    %br
+    = f.text_field :coordinated
+  %p
+    = f.label :user_id
+    %br
+    = f.text_field :user_id
+  %p
+    = f.label :in_reply_to_user_id
+    %br
+    = f.text_field :in_reply_to_user_id
+  %p
+    = f.label :in_reply_to_status_id
+    %br
+    = f.text_field :in_reply_to_status_id
+  %p
+    = f.label :in_reply_to_screen_name
+    %br
+    = f.text_field :in_reply_to_screen_name
+  %p
+    = f.submit

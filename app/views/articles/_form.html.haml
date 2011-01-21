@@ -1,0 +1,28 @@
+- form_for @article do |f|
+  = f.error_messages
+  %p
+    = f.label :subject
+    %br
+    = f.text_field :subject
+  %p
+    = f.label :author
+    %br
+    = f.text_field :author
+  %p
+    = f.label :guid
+    %br
+    = f.text_field :guid
+  %p
+    = f.label :blog
+    %br
+    = f.text_field :blog
+  %p
+    = f.label :link
+    %br
+    = f.text_field :link
+  %p
+    = f.label :text
+    %br
+    = f.text_area :text
+  %p
+    = f.submit

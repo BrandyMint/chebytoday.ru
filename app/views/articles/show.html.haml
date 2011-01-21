@@ -1,0 +1,27 @@
+- title "Article"
+
+%p
+  %strong Subject:
+  = @article.subject
+%p
+  %strong Author:
+  = @article.author
+%p
+  %strong Guid:
+  = @article.guid
+%p
+  %strong Blog Source:
+  = @article.blog
+%p
+  %strong Link:
+  = @article.link
+%p
+  %strong Text:
+  = @article.text
+
+%p
+  = link_to "Edit", edit_article_path(@article)
+  |
+  = link_to "Destroy", @article, :confirm => 'Are you sure?', :method => :delete
+  |
+  = link_to "View All", articles_path

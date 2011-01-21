@@ -1,0 +1,5 @@
+- if @submenu
+  #submenu
+    %ul.menu
+      - @submenu.each do |args|
+        = navigation_link( *args )

@@ -1,0 +1,56 @@
+@import formtastic_base
+
+//#loading
+//  display: none
+form.formtastic#new_twit_user
+  //twit_user
+  // 
+  //+float-form(!floated_total_width,!floated_label_width,!floated_input_width,!floated_label_padding_x, !floated_button_align,"left")
+  // +stack-form(250px, 100px, 0px, "buttons-right", 51px)
+  //(!floated_total_width,!floated_label_width,!floated_input_width,!floated_label_padding_x, !floated_button_align, !floated_label_text_align, !floated_select_width )
+  +float-form(250px,55px,"auto",0px,"buttons-right", "left", 15px )
+  // +formtastic-errors-on-top
+  abbr
+    display: none
+    visibility: hidden
+  li.error
+    color: red
+  .inline-errors
+    font-size: 9px
+    width: 170px
+    clear: both
+  li
+    float: left
+    width: auto
+  // +stack-form(300px,"full","right")
+  // +formtastic(10px,60px,100px,12px,"right",true)
+  //+formtastic(!total_width,!label_width,!input_width,!label_pad,!label_float,!button_float,!full_width_inputs)
+
+//  +formtastic(960px,300px,640px,0px,"clear","left",true)
+//  +stack-form()
+
+// class="formtastic twit_user" id="new_twit_user" 
+
+
+form.formtastic#user_new
+  // +formtastic(410px,100px,250px,12px,"right",true)
+  +stack-form(200px, 200px, 0px, "buttons-right", 0px)
+
+  //+float-form(600px,200px,"auto", 0px,"buttons-right", "left", 0px )
+  li.error
+    color: red
+  li
+    padding-bottom: 15px
+  fieldset
+    padding: 0px
+    border: none
+    // width: 450px
+    // border: 1px
+    
+
+.simple_form
+  label
+    padding-right: 20px
+    width: 200px
+  div
+    padding-bottom: 5px

@@ -1,0 +1,15 @@
+one:
+  subject: MyString
+  author: MyString
+  guid: MyString
+  blog_source: 
+  link: MyString
+  text: MyText
+
+two:
+  subject: MyString
+  author: MyString
+  guid: MyString
+  blog_source: 
+  link: MyString
+  text: MyText

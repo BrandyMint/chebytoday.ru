@@ -1,0 +1,56 @@
+ru:
+  devise:
+    omniauth_callbacks:
+      success: "Вы авторизованы"
+      user:
+        failure: "Ошибка авторизации сторонним сервисом"
+    oauth_callbacks:
+      user:
+        facebook:
+          success: "Вы авторизованы с помощью аккаунта на Facebook"
+    sessions:
+      user:
+        signed_in: "Вы авторизованы"
+        signed_out: "Вы вышли с сайта"
+    registrations:
+      user:
+        signed_up: "Вы зарегистрированы"
+        updated: "Ваши параметры обновлены"
+    failure:
+      unauthenticated: 'You need to sign in or sign up before continuing.'
+      unconfirmed: 'You have to confirm your account before continuing.'
+      locked: 'Your account is locked.'
+      invalid: 'Неверный email или пароль.'
+      invalid_token: 'Invalid authentication token.'
+      timeout: 'Your session expired, please sign in again to continue.'
+      inactive: 'Your account was not activated yet.'
+    sessions:
+      exist_virtual: "Вы зарегистрированы с этим емайлом ранее. Восстановите пароль и заходите!"
+      signed_in: 'Signed in successfully.'
+      signed_out: 'Signed out successfully.'
+    passwords:
+      send_instructions: 'Вам выслано письмо с инструкциями по восстановлению пароля.'
+      updated: 'Your password was changed successfully. You are now signed in.'
+    confirmations:
+      send_instructions: 'You will receive an email with instructions about how to confirm your account in a few minutes.'
+      confirmed: 'Your account was successfully confirmed. You are now signed in.'
+    registrations:
+      exist: "Вы были зарегистрированы с этим емайлом ранее, заходите."
+      exist_virtual: "Вы зарегистрированы с этим емайлом ранее. Восстановите пароль и заходите!"
+      signed_up: 'Welcome! You have signed up successfully.'
+      inactive_signed_up: 'You have signed up successfully. However, we could not sign you in because your account is %{reason}.'
+      updated: 'You updated your account successfully.'
+      destroyed: 'Bye! Your account was successfully cancelled. We hope to see you again soon.'
+    unlocks:
+      send_instructions: 'You will receive an email with instructions about how to unlock your account in a few minutes.'
+      unlocked: 'Your account was successfully unlocked. You are now signed in.'
+    oauth_callbacks:
+      success: 'Successfully authorized from %{kind} account.'
+      failure: 'Could not authorize you from %{kind} because "%{reason}".'
+    mailer:
+      confirmation_instructions:
+        subject: 'Confirmation instructions'
+      reset_password_instructions:
+        subject: 'Инструкция по восстановлению пароля'
+      unlock_instructions:
+        subject: 'Unlock Instructions'

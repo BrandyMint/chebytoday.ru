@@ -1,0 +1,315 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
+
+// @import "compass/reset";
+@import myforms
+@import nifty
+@import tooltip
+
+=tool-font
+  font-family: “Lucida Grande”, sans-serif
+  font-size: 10.4px
+  font-style: normal
+  font-weight: normal
+  text-transform: normal
+  letter-spacing: normal
+  line-height: 1.5em
+
+a
+  color: $primary_color
+  &:visited
+    color: $primary_color
+  &:hover
+    color: red
+
+a.tool
+  +tool-font
+
+@import twitter
+@import pagination
+
+#container
+  padding-top: 20px
+
+.error_messages
+  width: auto
+  padding-bottom: 20px
+
+.politic
+  width: 160px
+  margin-right: 20px
+  margin-bottom: 50px
+  float: left
+  .name
+    padding-top: 5px
+    font-family: "Impact"
+    font-size: 16px
+    letter-spacing: 0.2px
+  .title
+    padding-top: 5px
+    color: gray
+    font-size: 11px
+    font-style: italic
+    font-family: sans
+  .desc
+    display: none
+      
+    
+#mmenu
+  // font-size: 16px
+  // letter-spacing: 0.1em
+  padding-top: 25px
+  float: right
+  font-size: 14px
+  /* *
+  /*   font-family: sans
+
+#submenu
+  font-size: 14px
+  float: left
+  ul
+    margin-top: 0px
+    li
+      padding-left: 0px
+      padding-right: 20px
+    li.active
+      span
+        color: black
+        border-bottom: 2px solid black
+
+.big
+  font-size: 16px
+  font-weight: bold
+  color: #999
+
+ul.menu
+  font-family: "Helvetica"
+  padding-left: 0px
+  list-style: none
+  li
+    float: left
+    padding-left: 20px
+    a
+      text-decoration: none
+      border-bottom: 1px dashed $primary_color
+      &:hover
+        border-bottom: 1px dashed red
+  li.active
+    /* font-weight: bold
+    span
+      font-weight: bold
+      border-bottom: 3px solid black
+
+  li.chosen
+    a
+      font-weight: bold
+      color: black
+      border-bottom: 1px dashed black
+
+ul#login
+  padding-left: 0px
+  float: right
+  list-style: none
+  font-family: "Helvetica"
+
+  li
+    float: left
+    padding-left: 20px
+  li.active
+    font-weight: bold
+    span
+      border-bottom: 3px solid black
+
+// Заколовок + ссылка
+h2.super
+  padding-top: 0px
+  a
+    font-size: 14px
+    line-height: 30px
+    float: right
+
+#twits
+  clear: both
+
+ol#mtags
+  list-style: none
+  clear: both
+  margin-bottom: 50px
+  margin-left: 0px
+  padding-left: 0px
+  li
+    float: left
+    width: auto
+    // :clear none
+  a
+    padding: 3px 10px 3px 10px
+  a.mtag
+    font-size: 14px
+    text-decoration: none
+    color: green
+  a.current_mtag
+    font-size: 14px
+    text-decoration: none
+    color: white
+    background-color: green
+
+.tags
+  margin-bottom: 10px
+  margin-top: 50px
+  text-align: center
+
+// tags
+.css1
+  font-size: 8px
+
+.css2
+  font-size: 10px
+
+.css3
+  font-size: 12px
+
+.css4
+  font-size: 14px
+
+h2
+  margin-bottom: 30px
+  margin-top: 10px
+  font-family: "Helvetica"
+  font-weight: bold
+  font-size: 22px
+  // color: #999999
+
+#header
+  width: 900px
+  margin: 0 auto
+  color: black
+  padding: 0px 20px 30px 20px
+
+#all
+  position: relative
+
+p.desc
+  font-size: 12px
+  margin-bottom: 0px
+  padding-bottom: 0px
+
+h1#logo
+  margin-top: 30px
+  font-family: "Impact"
+  font-weight: normal
+  float: left
+  a
+    color: black
+    text-decoration: none
+    &:hover
+      color: red
+      text-decoration: underline
+#hdesc
+  // color = $primary_color+#555
+  color: #666
+  font-style: italic
+  width: 550px
+
+
+
+#footer
+  margin: 40px
+
+#main
+  width: 500px
+
+#sidebar
+  float: right
+  width: 270px
+
+.right
+  float: right
+  clear: both
+.left
+  float: left
+
+.spinner
+  text-align: center
+  vertical-align: middle
+  // display: block
+  display: table-cell
+  // height: 300px
+  width: 600px
+  img
+    margin-left: auto
+    margin-right: auto
+
+#footer
+  padding-top: 20px
+  color: black
+  text-align: center
+  padding-bottom: 20px
+  /* a
+  /*   color: black
+
+ul#authors
+  list-style: none
+  clear: both
+  padding-left: 0px
+  padding-bottom: 40px
+  padding-top: 0px
+  li
+    float: left
+    margin-right: 10px
+    height: 22px
+  clear: both
+
+.user
+  // background: url(/images/lj_user.gif) top left no-repeat
+  background: url(/images/face_icon.gif) no-repeat 0px 3px
+  padding-left: 15px
+  /* line-height: 19px
+  // vertical-align: top
+  font-size: 14px
+
+
+#sidebar
+  width: 260px
+  float: right
+  h2
+    padding-top: 0px
+    margin-top: 0px
+
+#articles
+  width: 600px
+  padding-right: 30px
+  float: left
+
+.article
+  margin-bottom: 50px
+  width: 600px
+  .title
+    font-family: Georgia, serif
+    font-size: 26px
+    font-style: italic
+    font-weight: normal
+    text-transform: normal
+    letter-spacing: normal
+    line-height: 1.2em
+    display: inline
+    margin-right: 5px
+  .author
+    font-family: "Helvetica"
+    font-size: 12px
+    color: #999
+    display: inline
+  .date
+    font-family: "Helvetica"
+    font-size: 12px
+    color: #999
+    margin-left: 5px
+    display: inline
+    white-space: nowrap
+  .summary
+    padding-top: 15px
+    padding-bottom: 5px
+    line-height: 19px
+    img
+      max-width: 600px

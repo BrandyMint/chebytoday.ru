@@ -1,0 +1,9 @@
+%ul#login
+  - if user_signed_in?
+    %li
+      #{current_user.nick}
+      (#{link_to 'профиль', edit_user_registration_path})
+    %li= link_to 'выйти', destroy_user_session_path
+
+  - elsif controller_name != 'sessions'
+    %li= link_to "Вдох..", new_user_session_path

@@ -1,0 +1,43 @@
+= render :partial => "submenu" 
+
+%h2= "Рейтинг чувашских блоггеров (#{Blog.count})"
+
+#users_rating
+  %table
+    %tr
+      %th &#8470;
+      %th= sortable 'yandex_rating', "Яндекс-рейтинг"
+      %th= sortable 'author', "Автор"
+      %th= sortable 'name', "Блог"
+      -# %th= sortable 'followers_count', "Follows"
+      -# %th= sortable 'favourites_count', "Favs"
+      -# -# %th= sortable "Ретвитов"
+      -# %th= sortable 'listed_count', "Lists"
+      -# %th= sortable 'twiter_created_at', "Days"
+      -# %th= sortable 'statuses_count',  'Statuses'
+    - counter=0
+    - @blogs.each do |blog|
+      %tr
+        %td= "#{counter+=1}."
+        %td.big= blog.yandex_rating
+        %td= link_to blog.author, blog.link
+        %td= link_to blog.title, blog.link
+        -# %td= link_to image_tag(user.profile_image_url,:class=>'profile_image')+" #{user.screen_name}","http://twitter.com/#{user.screen_name}",:title=>user.name
+        -# %td= user.name
+        -# %td= user.followers_count
+        -# %td= user.favourites_count
+        -# -# %td= user.twiter_created_at
+        -# %td= user.listed_count
+        -# %td= distance_of_time_in_words_to_now(user.twiter_created_at)
+        -# %td= user.statuses_count
+
+
+-# %ul.blogs
+-#   - for blog in @blogs
+-#     - if blog.name==blog.author
+-#       %li= link_to blog.name, blog.link
+-#     - else
+-#       %li= link_to "#{blog.name} (#{blog.author})", blog.link
+
+
+-# %p= link_to "New Blog Source", new_blog_path

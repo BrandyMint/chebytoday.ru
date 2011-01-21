@@ -1,0 +1,53 @@
+!!!
+%html
+  %head
+    %title
+      = "Чебоксары сегодня. Мониторинг блогосферы Чувашии. " + yield(:title)
+    %meta{"http-equiv"=>"Content-Type", :content=>"text/html; charset=utf-8"}/
+    %meta{:name=>"google-site-verification", :content=>"kgFz92QmW3uLtSkXslCIl2JwyqBhhybVmTWLR8NV7Fc"}/
+    = stylesheet_link_tag 'compiled/screen.css', :media => 'screen, projection'
+    = stylesheet_link_tag 'compiled/print.css', :media => 'print'
+    /[if IE]
+      = stylesheet_link_tag 'compiled/ie.css', :media => 'screen, projection'
+    %link{:rel=>"alternate", :type=>"application/rss+xml", :title=>"RSS", :href=>"http://feeds.feedburner.com/chebytoday"}
+    = javascript_include_tag :defaults, 'tooltips'
+    = csrf_meta_tag
+    = yield(:head)
+    = render "common/google_analytics"
+  
+  %body
+    #header
+      = render :partial=>"devise/shared/login"
+      = link_to(image_tag('/images/logo.png', :alt=>"Чебоксары сегодня"), root_path)
+      %h1#logo
+        = link_to('Чебоксары сегодня',root_path)
+        &nbsp;
+        = link_to image_tag('rss.png', :alt=>"Общая RSS-лента статей за сутки"), articles_path(:rss), :html_options => { :class => 'rss' } 
+
+      = render :partial=>"common/menu"
+      .clear
+      #hdesc
+        Общая лента блоггеров Чувашии.<br>Обнавляется каждые пол часа, сегодня уже&nbsp;<b>#{today_articles.html_safe}</b>.
+      = render :partial=>"common/submenu"
+    #container
+
+      = render :partial=>"common/flash", :object=>flash
+      - if show_title?
+        %h2= yield(:title)
+      
+      = yield
+  
+      .clear
+      
+    #footer
+      %p
+        %a{:href=>'http://twitter.com/chebytoday/'} @chebytoday
+        by
+        %a{:href=>'http://dapi.ru'} danil 
+        %a{:href=>'http://twitter.com/pismenny/'} @pismenny
+      %p
+        Powered By Ruby On Rails
+      %p
+        = link_to(image_tag('/images/rails.png'),'http://rubyonrails.org/')
+
+  = render "common/reformal"

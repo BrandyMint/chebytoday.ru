@@ -1,0 +1,15 @@
+- title "Blog Source"
+
+%p
+  %strong Name:
+  = @blog.name
+%p
+  %strong Link:
+  = @blog.link
+
+%p
+  = link_to "Edit", edit_blog_path(@blog)
+  |
+  = link_to "Destroy", @blog, :confirm => 'Are you sure?', :method => :delete
+  |
+  = link_to "View All", blogs_path

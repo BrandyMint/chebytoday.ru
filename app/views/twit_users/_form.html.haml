@@ -1,0 +1,8 @@
+// = render "common/flash"
+= render :partial=>"common/flash", :object=>flash
+= semantic_remote_form_for @twit_user  do |form|
+  // = form.error_messages
+  = form.input :screen_name, :label=>'Twitter', :input_html=>{ :size=>18 }
+  = form.commit_button :label=>'OK'
+#loading
+%br

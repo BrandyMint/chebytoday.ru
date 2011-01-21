@@ -1,0 +1,40 @@
+-# title "Полный список чебоксарских твиттерян (#{TwitUser.cheboksary.count})"
+-# = render :partial => 'twit_users/twit_user', :collection=>@twit_users
+-# .clear
+-# %p= link_to "New Twit User", new_twit_user_path
+-# количество френдов, ретвитов, дата регистрации (дней в списке)
+-#- title "Рейтинг чебоксарских твиттерян (#{TwitUser.cheboksary.count})"
+
+// = render :partial => "blogs/submenu" 
+
+#top
+  = render 'twit_users/newbies'
+  = render 'twit_users/new'
+  .clear
+
+#users_rating
+  %h2= "Рейтинг чебоксарских твиттерян (#{TwitUser.cheboksary.count})"
+  %table
+    %tr
+      %th &#8470;
+      %th= sortable 'screen_name', "Twitter"
+      %th= sortable 'name', "Имя"
+      %th= sortable 'followers_count', "Follows"
+      %th= sortable 'favourites_count', "Favs"
+      -# %th= sortable "Ретвитов"
+      %th= sortable 'listed_count', "Lists"
+      %th= sortable 'twiter_created_at', "Days"
+      %th= sortable 'statuses_count',  'Statuses'
+    - counter=0
+    - @twit_users.each do |user|
+      %tr
+        %td= "#{counter+=1}."
+        %td= link_to image_tag(user.profile_image_url,:class=>'profile_image')+" #{user.screen_name}","http://twitter.com/#{user.screen_name}",:title=>user.name
+        %td= user.name
+        %td= user.followers_count
+        %td= user.favourites_count
+        -# %td= user.twiter_created_at
+        %td= user.listed_count
+        %td= distance_of_time_in_words_to_now(user.twiter_created_at)
+        %td= user.statuses_count
+

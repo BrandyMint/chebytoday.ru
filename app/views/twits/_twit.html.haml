@@ -1,0 +1,11 @@
+.twitter
+  .image
+    // friends_count, statuses_count ,
+    = link_to image_tag(twit.twit_user.profile_image_url,:class=>'profile_image'),"http://twitter.com/#{twit.twit_user.screen_name}"
+  .screen_name
+    = link_to twit.twit_user.screen_name,"http://twitter.com/#{twit.twit_user.screen_name}"
+  .text
+    = twit_filter twit.text
+    %span.time
+      = twit.created_at.humanize
+  .clear

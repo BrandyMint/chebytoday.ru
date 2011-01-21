@@ -1,0 +1,11 @@
+-# title "Что мы о них думаем?"
+
+-# Politic.all.each do |politic|
+- (1..5).each do |politic|
+  - politic=Politic.first
+  .politic
+    .photo= image_tag 'http://lh4.ggpht.com/_j2Q8bflvUmg/TEW8CNtaNgI/AAAAAAAAFP4/UavURZTVPso/s640/IMG_4854.CR2.jpg', :width=>160
+    .name= politic.name
+    .title= politic.title
+    .desc= politic.desc
+  

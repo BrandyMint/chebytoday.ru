@@ -1,0 +1,35 @@
+// = render :partial => "submenu" 
+
+#sidebar
+
+  %h2 Блоггеры
+  %ul#authors
+    - Blog.active.each do |blog|
+      %li
+        =user blog
+    %li= link_to "&hellip;".html_safe, blogs_url
+  .clear
+  %br
+  .right= link_to "Полный список &rarr;".html_safe, blogs_url
+
+
+
+#articles
+  - @articles.each do |article|
+    .article
+      .header
+        .title
+          = link_to raw(article.title), article.link
+        .author
+          = user article
+        .date
+          = distance_of_time_in_words_to_now article.published_at
+          назад
+      .summary
+        = article.truncated
+
+
+= will_paginate @articles
+
+
+-# %p= link_to "New Article", new_article_path

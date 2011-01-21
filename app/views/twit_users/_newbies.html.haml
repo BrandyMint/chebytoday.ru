@@ -1,0 +1,21 @@
+
+#newbies
+  - if TwitUser.new_listed.count>0
+    %h2
+      Новенькие: 
+      %span= "(#{distance_of_time_in_words_to_now(TwitUser.new_listed.first.created_at)})"
+    %ol  
+      - TwitUser.new_listed.each do |user|
+        %li
+          = link_to image_tag(user.profile_image_url,:class=>'profile_image_small',:title=>user.name),"http://twitter.com/#{user.screen_name}"
+          = link_to user.screen_name,"http://twitter.com/#{user.screen_name}",:title=>user.name
+          = raw "(<i>#{user.name}</i>)"
+  .clear
+-#   .twit_user_small
+  -#   .image
+  -#   = link_to image_tag(twit_user.profile_image_url,:class=>'profile_image_small'),"http://twitter.com/#{twit_user.screen_name}"
+  -# .screen_name
+  -#   = link_to twit_user.screen_name,"http://twitter.com/#{twit_user.screen_name}"
+  -#   -# .info
+  -#   -#   = "(#{twit_user.friends_count})"
+  -# .clear

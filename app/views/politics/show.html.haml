@@ -1,0 +1,18 @@
+- title "Politic"
+
+%p
+  %strong Name:
+  = @politic.name
+%p
+  %strong Title:
+  = @politic.title
+%p
+  %strong Desc:
+  = @politic.desc
+
+%p
+  = link_to "Edit", edit_politic_path(@politic)
+  |
+  = link_to "Destroy", @politic, :confirm => 'Are you sure?', :method => :delete
+  |
+  = link_to "View All", politics_path

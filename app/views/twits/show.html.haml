@@ -1,0 +1,54 @@
+- title "Twit"
+
+%p
+  %strong Text:
+  = @twit.text
+%p
+  %strong Status:
+  = @twit.status_id
+%p
+  %strong Created At:
+  = @twit.created_at
+%p
+  %strong Favorited:
+  = @twit.favorited
+%p
+  %strong Place:
+  = @twit.place
+%p
+  %strong Retweeted Status:
+  = @twit.retweeted_status
+%p
+  %strong Geo:
+  = @twit.geo
+%p
+  %strong Truncated:
+  = @twit.truncated
+%p
+  %strong Source:
+  = @twit.source
+%p
+  %strong Contributors:
+  = @twit.contributors
+%p
+  %strong Coordinated:
+  = @twit.coordinated
+%p
+  %strong User:
+  = @twit.user_id
+%p
+  %strong In Reply To User:
+  = @twit.in_reply_to_user_id
+%p
+  %strong In Reply To Status:
+  = @twit.in_reply_to_status_id
+%p
+  %strong In Reply To Screen Name:
+  = @twit.in_reply_to_screen_name
+
+%p
+  = link_to "Edit", edit_twit_path(@twit)
+  |
+  = link_to "Destroy", @twit, :confirm => 'Are you sure?', :method => :delete
+  |
+  = link_to "View All", twits_path

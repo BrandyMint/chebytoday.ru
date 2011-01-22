@@ -3,6 +3,8 @@
 require 'lib/twitter/chebytoday'
 
 class Dancer < LoopDance::Dancer
+
+  disable_autostart
   
   every 5.minutes do
     Twit.update_statuses

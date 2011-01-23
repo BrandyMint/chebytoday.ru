@@ -98,10 +98,10 @@ class TwitUser < ActiveRecord::Base
     # end
 
     after_transition any => :cheboksary do |user|
-      unless user.following
-        @@chebytoday.follow(user) or user.state = :blocked
-        user.update_attribute( :followed_at, DateTime.now() )
-      end
+      # unless user.following
+      #   @@chebytoday.follow(user) or user.state = :blocked
+      #   user.update_attribute( :followed_at, DateTime.now() )
+      # end
     end
 
     
@@ -123,6 +123,9 @@ class TwitUser < ActiveRecord::Base
     import_from_list('pismenny','cheboksary')
     import_from_list('Radanisk','cheboksary')
     import_from_list('lexlarri','cheboksary')
+    import_from_list('IrinaDm','chuvashia')
+    import_from_list('svoydom21','cheboksary')
+    import_from_list('michaelgruzdev','hometown')
 
     search_users_from_cheboksary
 
@@ -332,14 +335,19 @@ class TwitUser < ActiveRecord::Base
     self
   end
 
-  def is_location_cheboksary?
-    (self.location=~/novochebok|cheboks|chuvashi|ебокса|уваши|tsjebok|.*56\.1.*47\.4.*/i) ? true : false
-  end
-
   def to_cheboksary(source)
     state_cheboksary
     update_attribute(:cheboksary_source,source)
   end
+
+  def is_location_cheboksary?
+    (self.location=~/novochebok|cheboks|chuvashi|ебокса|уваши|tsjebok|.*56\.1.*47\.4.*/i) ? true : false
+  end
+
+  def is_cheboksary_granted?
+    is_location_cheboksary? || cheboksary_source=~/cheboksary/i
+  end
+
   
 private
 

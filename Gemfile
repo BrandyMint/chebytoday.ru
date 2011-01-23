@@ -32,7 +32,7 @@ gem "devise", :git => "git://github.com/plataformatec/devise.git"
 gem 'typus', :git => 'https://github.com/fesplugas/typus.git'
 
 gem "will_paginate", "~> 3.0.pre2"
-gem 'twitter'
+# gem 'twitter'
 gem 'grackle'
 
 #gem "russian"

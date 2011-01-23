@@ -1,1 +1,22 @@
 TODO
+
+
+
+Twitter:
+
+Чебоксарские те, у которых установлено is_cheboksary
+
+1) Методы поиска:
+- вблизи чебоксар
+- location: cheboksary и т.д.
+
+  Разпознавание найденных:
+
+  если is_location_cheboksary?:
+  - правда, то устанавливается is_cheboksary 
+  - ложь, то кидается в pull на @chebytoday
+
+2) Импорт:
+- из конкретных листов
+
+3) Список из базы экспорится в chebytoday/cheboksary

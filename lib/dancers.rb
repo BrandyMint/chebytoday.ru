@@ -8,8 +8,8 @@ class Dancer < LoopDance::Dancer
   
   every 30.minutes do 
     Blog.update_blogs
-    Twit.update_statuses
-    TwitUser.update_users
+    #Twit.update_statuses
+    # TwitUser.update_users
   end
   
 end

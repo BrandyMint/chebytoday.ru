@@ -27,8 +27,9 @@ gem 'mail'
 
 gem "devise", :git => "git://github.com/plataformatec/devise.git"
 
-gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git'
+#gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git'
 #gem 'rails_admin', :path => '/home/danil/code/gems/rails_admin'
+gem 'typus', :git => 'https://github.com/fesplugas/typus.git'
 
 gem "will_paginate", "~> 3.0.pre2"
 gem 'twitter'

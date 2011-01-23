@@ -344,7 +344,7 @@ class TwitUser < ActiveRecord::Base
 private
 
   def check_location
-    self.is_cheboksary = is_location_cheboksary?
+    self.is_cheboksary = true if is_location_cheboksary?
     true
   end
   

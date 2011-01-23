@@ -124,7 +124,6 @@ class Twitter < ActiveRecord::Base
   end
 
   def set_from_twitter( twitter, src )
-    debugger
     Twitter.logger.info("set_from_twitter #{twitter.screen_name}") if twitter
 
     # if twitter

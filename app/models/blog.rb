@@ -65,3 +65,22 @@ class Blog < ActiveRecord::Base
   end
 
 end
+
+# == Schema Information
+#
+# Table name: blogs
+#
+#  id                  :integer         not null, primary key
+#  author              :string(255)
+#  title               :string(255)
+#  link                :string(255)
+#  created_at          :datetime
+#  updated_at          :datetime
+#  yandex_rating       :integer(8)
+#  friends             :integer
+#  rss_link            :string(255)
+#  articles_count      :integer
+#  articles_updated_at :datetime
+#  user_id             :integer
+#
+

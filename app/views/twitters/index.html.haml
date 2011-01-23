@@ -1,0 +1,47 @@
+%h1 Listing twitters
+
+%table
+  %tr
+    %th Id
+    %th Screen name
+    %th Profile image url
+    %th Friends count
+    %th Statuses count
+    %th Location
+    %th Source
+    %th Is cheboksary
+    %th State
+    %th List status
+    %th Favourites count
+    %th Twitter created at
+    %th Listed count
+    %th Name
+    %th Anounced at
+    %th
+    %th
+    %th
+
+  - @twitters.each do |twitter|
+    %tr
+      %td= twitter.id
+      %td= twitter.screen_name
+      %td= twitter.profile_image_url
+      %td= twitter.friends_count
+      %td= twitter.statuses_count
+      %td= twitter.location
+      %td= twitter.source
+      %td= twitter.is_cheboksary
+      %td= twitter.state
+      %td= twitter.list_status
+      %td= twitter.favourites_count
+      %td= twitter.twitter_created_at
+      %td= twitter.listed_count
+      %td= twitter.name
+      %td= twitter.anounced_at
+      %td= link_to 'Show', twitter
+      %td= link_to 'Edit', edit_twitter_path(twitter)
+      %td= link_to 'Destroy', twitter, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Twitter', new_twitter_path

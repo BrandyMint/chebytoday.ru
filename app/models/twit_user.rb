@@ -37,8 +37,6 @@ class TwitUser < ActiveRecord::Base
   
   # scope :not_followed, where( "state='listed' and (not is_follow or is_follow is NULL)" )
 
-  before_save :check_location
-
   def self.logger
     ActiveSupport::LogSubscriber::logger
   end
@@ -343,11 +341,10 @@ class TwitUser < ActiveRecord::Base
   def is_location_cheboksary?
     (self.location=~/novochebok|cheboks|chuvashi|ебокса|уваши|tsjebok|.*56\.1.*47\.4.*/i) ? true : false
   end
-
+  
   def is_cheboksary_granted?
     is_location_cheboksary? || cheboksary_source=~/cheboksary/i
   end
-
   
 private
 
@@ -357,3 +354,30 @@ private
   end
   
 end
+
+# == Schema Information
+#
+# Table name: twit_users
+#
+#  id                :integer(8)      primary key
+#  screen_name       :string(255)
+#  profile_image_url :string(255)
+#  friends_count     :integer         not null
+#  statuses_count    :integer         not null
+#  following         :boolean
+#  is_cheboksary     :boolean
+#  state             :string(255)     not null
+#  created_at        :datetime
+#  updated_at        :datetime
+#  favourites_count  :integer
+#  followers_count   :integer
+#  twiter_created_at :datetime
+#  listed_count      :integer
+#  name              :string(255)
+#  is_anounced       :boolean         default(FALSE)
+#  followed_at       :datetime
+#  location          :string(255)
+#  source            :string(255)
+#  cheboksary_source :string(255)
+#
+

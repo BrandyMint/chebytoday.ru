@@ -1,0 +1,30 @@
+= simple_form_for(@twitter) do |f|
+  - if @twitter.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@twitter.errors.count, "error")
+        prohibited this twitter from being saved:
+
+      %ul
+      - @twitter.errors.full_messages.each do |msg|
+        %li= msg
+
+  .inputs
+    = f.input :id
+    = f.input :screen_name
+    = f.input :profile_image_url
+    = f.input :friends_count
+    = f.input :statuses_count
+    = f.input :location
+    = f.input :source
+    = f.input :is_cheboksary
+    = f.input :state
+    = f.input :list_status
+    = f.input :favourites_count
+    = f.input :twitter_created_at
+    = f.input :listed_count
+    = f.input :name
+    = f.input :anounced_at
+
+  .actions
+    = f.button :submit

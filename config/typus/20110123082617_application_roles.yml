@@ -8,4 +8,5 @@ admin:
   Politic: create, read, update, delete
   Twit: create, read, update, delete
   TwitUser: create, read, update, delete
+  Twitter: create, read, update, delete
   User: create, read, update, delete

@@ -20,3 +20,22 @@ class Article < ActiveRecord::Base
   end
 
 end
+
+# == Schema Information
+#
+# Table name: articles
+#
+#  id           :integer         not null, primary key
+#  is_mained    :boolean         default(FALSE), not null
+#  published_at :datetime        not null
+#  title        :string(255)     not null
+#  author       :string(255)     not null
+#  guid         :string(255)     not null
+#  blog_id      :integer         not null
+#  link         :string(255)
+#  summary      :text            not null
+#  description  :text
+#  created_at   :datetime
+#  updated_at   :datetime
+#
+

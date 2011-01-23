@@ -53,3 +53,26 @@ class Twit < ActiveRecord::Base
   end
   
 end
+
+# == Schema Information
+#
+# Table name: twits
+#
+#  id                      :integer(8)      primary key
+#  text                    :text
+#  created_at              :datetime
+#  favorited               :boolean
+#  place                   :text
+#  retweeted_status        :text
+#  geo                     :string(255)
+#  truncated               :boolean
+#  source                  :string(255)
+#  contributors            :string(255)
+#  coordinated             :string(255)
+#  twit_user_id            :integer(8)
+#  in_reply_to_user_id     :integer(8)
+#  in_reply_to_status_id   :integer(8)
+#  in_reply_to_screen_name :string(255)
+#  updated_at              :datetime
+#
+

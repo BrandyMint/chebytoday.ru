@@ -1,0 +1,35 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  id: 
+  screen_name: MyString
+  profile_image_url: MyString
+  friends_count: 1
+  statuses_count: 1
+  location: MyString
+  source: MyString
+  is_cheboksary: false
+  state: MyString
+  list_status: MyString
+  favourites_count: 1
+  twitter_created_at: 2011-01-23 20:11:37
+  listed_count: 1
+  name: MyString
+  anounced_at: 2011-01-23 20:11:37
+
+two:
+  id: 
+  screen_name: MyString
+  profile_image_url: MyString
+  friends_count: 1
+  statuses_count: 1
+  location: MyString
+  source: MyString
+  is_cheboksary: false
+  state: MyString
+  list_status: MyString
+  favourites_count: 1
+  twitter_created_at: 2011-01-23 20:11:37
+  listed_count: 1
+  name: MyString
+  anounced_at: 2011-01-23 20:11:37

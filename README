@@ -12,7 +12,7 @@ Twitter:
 
   Разпознавание найденных:
 
-  если is_location_cheboksary?:
+  если is_cheboksary_granted?:
   - правда, то устанавливается is_cheboksary 
   - ложь, то кидается в pull на @chebytoday
 
@@ -20,3 +20,8 @@ Twitter:
 - из конкретных листов
 
 3) Список из базы экспорится в chebytoday/cheboksary
+
+
+twitter:
+list_state: listed, none, blocked
+state: cheboksary, pull, foreign

@@ -35,6 +35,8 @@ gem "will_paginate", "~> 3.0.pre2"
 # gem 'twitter'
 gem 'grackle'
 
+gem 'annotate'
+
 #gem "russian"
 gem "russian", :git => "https://github.com/dima4p/russian.git"
 

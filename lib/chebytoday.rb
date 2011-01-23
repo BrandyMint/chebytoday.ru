@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
-module Twitter
 
+module Grackle
   # Когда пользователь нас заблокировал отфолловинга
   class BlockedFollowing < StandardError
   end  
+  
+class Chebytoday
 
-  class Chebytoday
-    
+
     attr_reader :client
     #cattr_reader :instance
   
@@ -35,7 +36,7 @@ module Twitter
         block.call
         #yield
       rescue Grackle::TwitterError => e   # TwitterError
-        raise Twitter::BlockedFollowing.new if
+        raise Grackle::BlockedFollowing.new if
           e.message=~/Could not follow user: You have been blocked from following this account at the request of the user/ ||
           e.message=~/Could not follow user: Sorry, this account has been suspended/
         pp e
@@ -166,7 +167,7 @@ module Twitter
         @friends.push user
         true
       end
-    rescue Twitter::BlockedFollowing => e
+    rescue Grackle::BlockedFollowing => e
       logger.warn "User blocked #{user.screen_name}"
       false
     end

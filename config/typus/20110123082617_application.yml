@@ -58,6 +58,21 @@ TwitUser:
     default_action_on_item: show
     per_page: 50
 
+Twitter:
+  fields:
+    # default: screen_name, profile_image_url, friends_count, statuses_count, following, is_cheboksary, state, favourites_count, followers_count, listed_count, name, is_anounced, followed_at, location, source, cheboksary_source
+    default: screen_name, name, twitter, state, list_state, location, source, anounced_at
+    # form: screen_name, profile_image_url, friends_count, statuses_count, following, is_cheboksary, state, favourites_count, followers_count, listed_count, name, is_anounced, followed_at, location, source, cheboksary_source
+    # show: screen_name, is_location_cheboksary?, following, is_cheboksary, state, favourites_count, followers_count, listed_count, name, is_anounced, followed_at, location, source, cheboksary_source
+  order_by: 
+  relationships: 
+  filters: state, list_state
+  search: screen_name, name, location, source
+  application: chebytoday
+  options:
+    default_action_on_item: show
+    per_page: 50
+
 User:
   fields:
     default: email, sign_in_count, current_sign_in_at, last_sign_in_at, current_sign_in_ip, last_sign_in_ip, nick, role, status

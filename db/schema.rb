@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110121085201) do
+ActiveRecord::Schema.define(:version => 20110123171137) do
 
   create_table "articles", :force => true do |t|
     t.boolean  "is_mained",    :default => false, :null => false
@@ -133,6 +133,33 @@ ActiveRecord::Schema.define(:version => 20110121085201) do
   end
 
   add_index "twits", ["id"], :name => "index_twits_on_id", :unique => true
+
+  create_table "twitters", :id => false, :force => true do |t|
+    t.integer  "id",                 :limit => 8
+    t.string   "screen_name",                                    :null => false
+    t.string   "name"
+    t.string   "profile_image_url"
+    t.integer  "friends_count",                   :default => 0, :null => false
+    t.integer  "statuses_count",                  :default => 0, :null => false
+    t.integer  "favourites_count",                :default => 0, :null => false
+    t.integer  "listed_count",                    :default => 0, :null => false
+    t.string   "location"
+    t.string   "source",                                         :null => false
+    t.string   "state",                                          :null => false
+    t.string   "list_state",                                     :null => false
+    t.datetime "twitter_created_at",                             :null => false
+    t.datetime "anounced_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "twitters", ["favourites_count"], :name => "index_twitters_on_favourites_count"
+  add_index "twitters", ["friends_count"], :name => "index_twitters_on_friends_count"
+  add_index "twitters", ["listed_count"], :name => "index_twitters_on_listed_count"
+  add_index "twitters", ["screen_name"], :name => "index_twitters_on_screen_name", :unique => true
+  add_index "twitters", ["state"], :name => "index_twitters_on_state"
+  add_index "twitters", ["statuses_count"], :name => "index_twitters_on_statuses_count"
+  add_index "twitters", ["twitter_created_at"], :name => "index_twitters_on_twitter_created_at"
 
   create_table "users", :force => true do |t|
     t.string   "email",                               :default => "",   :null => false

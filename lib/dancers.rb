@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-require 'lib/twitter/chebytoday'
+require 'lib/chebytoday'
 
 class Dancer < LoopDance::Dancer
 

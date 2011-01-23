@@ -1,6 +1,6 @@
 require 'grackle'
-require 'twitter/chebytoday'
+require 'chebytoday'
 require 'myhash'
 require 'mydate'
 
-@@chebytoday = Twitter::Chebytoday.new()
+@@chebytoday = Grackle::Chebytoday.new()

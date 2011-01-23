@@ -1,0 +1,11 @@
+# Typus Roles Configuration File
+#
+# Use the README file as a reference to customize settings.
+
+admin:
+  Article: create, read, update, delete
+  Blog: create, read, update, delete
+  Politic: create, read, update, delete
+  Twit: create, read, update, delete
+  TwitUser: create, read, update, delete
+  User: create, read, update, delete

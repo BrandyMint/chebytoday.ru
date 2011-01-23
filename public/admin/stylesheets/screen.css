@@ -24,12 +24,7 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 
 /* @group Defaults */
 
-html,
-body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-}
+html, body {}
 
 body {
   font-family: "Lucida Grande", Sans-serif;
@@ -61,7 +56,7 @@ li { color: #777; }
 a,
 a:visited,
 a:link { color: #000; font-weight: normal; }
-a:hover { color: #333; text-decoration: underline; }
+a:hover { color: #333; text-decoration: underline!important; }
 
 /* @end */
 
@@ -109,6 +104,7 @@ a:hover { color: #333; text-decoration: underline; }
 /* @group Content */
 
 #content { margin: 0 0 0 20em; }
+#content.headless { margin: 1em; }
 
 #content h2 { font-size: 1.5em; margin: 0.5em 0; }
 #content h2 small { font-size: 0.75em; }
@@ -159,21 +155,13 @@ a:hover { color: #333; text-decoration: underline; }
 #sidebar ul li { padding: 0.25em 1em; }
 
 #sidebar a { text-decoration: none; }
-#sidebar a:hover { text-decoration: underline; }
+#sidebar li a:hover { text-decoration: underline; }
 
 /* @end */
 
 /* @group Footer */
 
-#footer_wrapper {
-  bottom: 0;
-  height: 50px;
-  position: absolute;
-  width: 100%;
-  z-index: -100;
-}
-
-#footer { font-size: 0.9em; padding: 20px; }
+#footer_wrapper { display: none; }
 
 /* @end */
 
@@ -182,7 +170,8 @@ a:hover { color: #333; text-decoration: underline; }
 fieldset { margin: 0; padding: 0; }
 fieldset ol { margin: 0!important; }
 fieldset ol li { list-style: none!important; margin: 1em 0!important; }
-fieldset small { font-size: 0.9em; font-weight: normal; }
+fieldset small { font-size: 0.9em; font-weight: normal; margin: 0 0 0 0.25em; }
+fieldset small a { text-decoration: none; }
 
 fieldset.inputs { }
 
@@ -194,7 +183,7 @@ fieldset.inputs { }
   }
 
   fieldset.inputs input[type='text']:focus,
-  fieldset.inputs input[type='password']:focus, {
+  fieldset.inputs input[type='password']:focus {
     background: #FFFCE1;
   }
 
@@ -244,12 +233,12 @@ fieldset.buttons { }
   margin: 0 0 1em 0;
 }
 
-#account #box h1 { margin: 0.5em 0 0.5em 0; }
+#account #box h1 { margin: 0.5em 0; }
 #account #box ul { margin: 1.5em 0 0.5em 0; }
 #account #box li { margin: 1em 0; }
 
 #account #box input.text { font-size: 2em; padding: 0.25em; width: 17.25em; }
-#account #box input.button { margin: 0.5em 0 0 0; }
+#account #box input.button { margin: 0.5em 1em 0 0; }
 
 #account #footer { font-size: 0.9em; line-height: 1.8em; text-align: center; }
 #account #footer a { font-weight: bold; }
@@ -258,15 +247,23 @@ fieldset.buttons { }
 
 /* @group Pagination */
 
-.pagination { margin: 1.5em auto; text-align: center; }
+.pagination {
+  border-top: 1px solid #D3D3D3;
+  margin: 1.5em auto;
+  padding: 1em 0;
+  text-align: center;
+}
 
+.pagination em { font-style: normal!important; }
+.pagination em,
 .pagination a { padding: 3px 5px; text-decoration: none; }
-.pagination a:hover { background: #000; color: #FFF; }
+.pagination a:hover,
+.pagination em { background: #000; color: #FFF; }
 
 .pagination span.disabled { color: #D3D3D3; margin: 2px; padding: 2px 3px; }
 
-.pagination .left { float: left; }
-.pagination .right { float: right; }
+.pagination .previous_page { float: left; }
+.pagination .next_page { float: right; }
 
 /* @end */
 
@@ -276,10 +273,11 @@ fieldset.buttons { }
 .alert,
 .notice {
   padding: 0.8em;
-  margin-bottom: 1em;
+  margin: 1em 0;
   border: 1px solid #ddd;
   -moz-border-radius: 8px;
   -webkit-border-radius: 8px;
+  line-height: 1.5em;
 }
 
 #errorExplanation p,
@@ -327,14 +325,6 @@ fieldset.buttons { }
 
 /* @end */
 
-/* @group Sprite */
-
-.sprite { background: url(../images/ui-icons.png) no-repeat; text-indent: -10000px; }
-.trash { background-position: -177px -97px; height: 15px; width: 15px; }
-.unrelate { background-position: -145px -129px; height: 15px; width: 15px; }
-
-/* @end */
-
 /* @group Filters */
 
 #content .filters {
@@ -354,5 +344,24 @@ fieldset.buttons { }
 
 #search { float: right; }
 #search input { font-size: 1em; padding: 3px; }
+
+/* @end */
+
+/* @group Misc */
+
+ul.predefined_filters {
+  margin: 1em 0 0.5em 0!important;
+}
+
+ul.predefined_filters li {
+  display: inline;
+  margin: 0 0.5em 0 0;
+}
+
+.actions {
+  font-size: 0.9em;
+  margin: 0.5em 0;
+  height: 1em;
+}
 
 /* @end */

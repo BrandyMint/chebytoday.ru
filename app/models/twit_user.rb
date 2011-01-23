@@ -333,7 +333,7 @@ class TwitUser < ActiveRecord::Base
   end
 
   def is_location_cheboksary?
-    self.location=~/cheboks|chuvashi|ебокса|уваши|tsjebok|.*56\.1.*47\.4.*/i
+    (self.location=~/novochebok|cheboks|chuvashi|ебокса|уваши|tsjebok|.*56\.1.*47\.4.*/i) ? true : false
   end
 
   def to_cheboksary(source)

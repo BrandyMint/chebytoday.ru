@@ -17,18 +17,18 @@ class Twitter < ActiveRecord::Base
 
   STATE = %w( cheboksary pull foreign )
   #STATE = %w(pending encoding encoded error published)
-  validates_inclusion_of :state, :in => STATE
+  #validates_inclusion_of :state, :in => STATE
   
-  # state_machine :initial => :pull do
-  #   state :cheboksary, :pull, :foreign
-  # end
+   state_machine :initial => :pull do
+     state :cheboksary, :pull, :foreign
+   end
 
   LIST_STATE = %w( listed none blocked )
-  validates_inclusion_of :list_state, :in => LIST_STATE
+  # validates_inclusion_of :list_state, :in => LIST_STATE
   
-  # state_machine :list_state, :initial => :none do
-  #   state :listed, :none, :blocked
-  # end
+  state_machine :list_state, :initial => :none do
+    state :listed, :none, :blocked
+   end
 
   class << self
     def logger
@@ -36,7 +36,7 @@ class Twitter < ActiveRecord::Base
     end
     def import_from_twit_users
       # destroy_all
-      TwitUser.all.map do |t|
+      Twitter.all.map do |t|
         h = {}
         %w[ screen_name name profile_image_url
           friends_count statuses_count favourites_count listed_count
@@ -102,13 +102,13 @@ class Twitter < ActiveRecord::Base
   
   def validate_twitter
     begin
-      twitter = @@chebytoday.get_user(self.screen_name)
+      @twitter_user = @@chebytoday.get_user(self.screen_name)
     rescue StandardError => e # Twitter::TwitterError  =>  e   # TwitterError
       errors.add(:screen_name, "Ошибка соединения с твиттером")
     end
     
-    if twitter
-      if t = Twitter.find_by_screen_name( twitter.screen_name )
+    if @twitter_user
+      if t = Twitter.find_by_screen_name( @twitter_user.screen_name )
         unless t.state=='cheboksary'
           t.to_pull
           t.update_attribute :source, 'web'
@@ -116,28 +116,28 @@ class Twitter < ActiveRecord::Base
           errors.add(:screen_name, "и ожидает ручной проверки")
         end
       else
-        set_from_twitter( twitter, 'web' )
+        set_from_twitter( @twitter_user, 'web' )
       end
     else
       errors.add(:screen_name, "Нет такого пользователя в твиттере")
     end
   end
 
-  def set_from_twitter( twitter=nil, src=nil )
-    
-    TwitUser.logger.info("set_from_twitter #{twitter.screen_name} #{!twitter} #{!self.twitter_created_at} #{!twitter.created_at}") if twitter
+  def set_from_twitter( twitter, src )
+    debugger
+    Twitter.logger.info("set_from_twitter #{twitter.screen_name}") if twitter
 
-    if twitter
-      twitter = @@chebytoday.get_user( twitter.screen_name )
-      # А зачем? Пущай заново берет. А то search#near глючные валязят.
-      #if !self.twiter_created_at ||
-      #  !twitter.created_at
-    else 
-      twitter = @@chebytoday.get_user( screen_name )
-    end
+    # if twitter
+    #   twitter = @@chebytoday.get_user( twitter.screen_name )
+    #   # А зачем? Пущай заново берет. А то search#near глючные валязят.
+    #   #if !self.twiter_created_at ||
+    #   #  !twitter.created_at
+    # else 
+    #   twitter = @@chebytoday.get_user( screen_name )
+    # end
     
     # raise "Can't get user #{twitter.screen_name} from #{src}" unless twitter
-    return nil unless twitter
+    # return nil unless twitter
     
     h = {
       :profile_image_url => twitter.profile_image_url,
@@ -146,24 +146,16 @@ class Twitter < ActiveRecord::Base
       :friends_count => twitter.friends_count,
       :favourites_count => twitter.favourites_count,
       :followers_count => twitter.followers_count,
-      :following => twitter.following,
-      :twiter_created_at => twitter.created_at,
+      #      :following => twitter.following,
+      :twitter_created_at => twitter.created_at,
       :listed_count => twitter.listed_count,
-      :name => twitter.name
+      :name => twitter.name,
+      :screen_name => twitter.screen_name,
+      :source => src
     }
 
-    # Новый зверь
-    unless self.id
-      self.id = twitter.id 
-      h[:screen_name] = twitter.screen_name 
-      h[:source] = src
-    end
-
-    # h[:is_follow] = true if src=='following' || cheboksary_sure
-    # h[:state] = 'pull' поумолчанию
-
+    self.id = twitter.id  unless self.id
     self.attributes = h
-
     self
   end
 

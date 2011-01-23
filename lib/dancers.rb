@@ -6,12 +6,9 @@ class Dancer < LoopDance::Dancer
 
   disable_autostart
   
-  every 5.minutes do
-    Twit.update_statuses
-  end
-
   every 30.minutes do 
     Blog.update_blogs
+    Twit.update_statuses
     TwitUser.update_users
   end
   

@@ -17,7 +17,7 @@ class Twit < ActiveRecord::Base
 
   def self.update_statuses
     since_id=Twit.last_status_id # ? Twit.last_status_id : nil
-    @@chebytoday.update_statuses(since_id)
+    # @@chebytoday.update_statuses(since_id)
     @@chebytoday.update_search_statuses(since_id)
   end
 

@@ -214,7 +214,7 @@ class TwitUser < ActiveRecord::Base
     c=0
     for page in 1..pages do
       # logger.info "Get page #{page}"
-      r=@@chebytoday.search_near_users(page)
+      r = @@chebytoday.search_near_users(page)
       if r        
         r.each { |t|
           p t.location

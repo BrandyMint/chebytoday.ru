@@ -1,47 +1,43 @@
-%h1 Listing twitters
+-# title "Полный список чебоксарских твиттерян (#{TwitUser.cheboksary.count})"
+-# = render :partial => 'twitters/twitter', :collection=>@twitters
+-# .clear
+-# %p= link_to "New Twit User", new_twitter_path
+-# количество френдов, ретвитов, дата регистрации (дней в списке)
+-#- title "Рейтинг чебоксарских твиттерян (#{TwitUser.cheboksary.count})"
 
-%table
-  %tr
-    %th Id
-    %th Screen name
-    %th Profile image url
-    %th Friends count
-    %th Statuses count
-    %th Location
-    %th Source
-    %th Is cheboksary
-    %th State
-    %th List status
-    %th Favourites count
-    %th Twitter created at
-    %th Listed count
-    %th Name
-    %th Anounced at
-    %th
-    %th
-    %th
+// = render :partial => "blogs/submenu" 
 
-  - @twitters.each do |twitter|
+#top
+  = render 'twitters/newbies'
+  = render 'twitters/new'
+  .clear
+
+#users_rating
+  %h2= "Рейтинг чебоксарских твиттерян (#{@twitters.count})"
+  %table
     %tr
-      %td= twitter.id
-      %td= twitter.screen_name
-      %td= twitter.profile_image_url
-      %td= twitter.friends_count
-      %td= twitter.statuses_count
-      %td= twitter.location
-      %td= twitter.source
-      %td= twitter.is_cheboksary
-      %td= twitter.state
-      %td= twitter.list_status
-      %td= twitter.favourites_count
-      %td= twitter.twitter_created_at
-      %td= twitter.listed_count
-      %td= twitter.name
-      %td= twitter.anounced_at
-      %td= link_to 'Show', twitter
-      %td= link_to 'Edit', edit_twitter_path(twitter)
-      %td= link_to 'Destroy', twitter, :confirm => 'Are you sure?', :method => :delete
+      %th &#8470;
+      %th= sortable 'screen_name', "Twitter"
+      %th= sortable 'name', "Имя"
+      %th= sortable 'followers_count', "Follows"
+      -# %th= sortable 'favourites_count', "Favs"
+      -# %th= sortable "Ретвитов"
+      -# %th= sortable 'listed_count', "Lists"
+      %th= sortable 'twitter_created_at', "Days"
+      %th= sortable 'statuses_count',  'Statuses'
+      %th= sortable 'source',  'Источник'
+    - counter=0
+    - @twitters.each do |user|
+      %tr
+        %td= "#{counter+=1}."
+        %td= link_to image_tag(user.profile_image_url,:class=>'profile_image')+" #{user.screen_name}","http://twitter.com/#{user.screen_name}",:title=>user.name
+        %td= user.name
+        %td= user.followers_count
+        -# %td= user.favourites_count
+        -# %td= user.twiter_created_at
+        -# %td= user.listed_count
+        %td= distance_of_time_in_words_to_now(user.twitter_created_at)
+        %td= user.statuses_count
+        %td
+          %i.gray.small= user.source
 
-%br
-
-= link_to 'New Twitter', new_twitter_path

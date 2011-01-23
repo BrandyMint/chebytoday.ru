@@ -10,8 +10,10 @@ Chebytoday::Application.routes.draw do
 
   resources :politics
 
-  resources :twit_users
-  resources :twits
+  #resources :twit_users
+  #resources :twits
+  match "/twit_users" => redirect("/twitters")
+
   
   root :to => "articles#index"
   

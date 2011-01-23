@@ -1,11 +1,11 @@
-#add_twit_user
+#add_twitter
   %p.desc
     Списк Чебоксарских твиттерян регулярно пополняется, в том числе и благодаря Вашим наводкам. Следите за происходящим на
     %a{:href=>'http://twitter.com/chebytoday/'} @chebytoday
   %p.desc
     А по всем вопросам пишите прямо на
     %a{:href=>'http://twitter.com/pismenny/'} @pismenny
-  %h2 Добавить Чебоксарсца:
+  %h2 Добавить Чебоксарца:
   // = form_remote_tag :url => { :action => 'index' }, :id => "tool-form",  :update => { :success => "response", :failure => "error" }, :loading => "$('#loading').toggle()", :complete => "$('#loading').toggle()"
-  #twit_user
-    = render 'twit_users/form'
+  #twitter
+    = render 'twitters/form'

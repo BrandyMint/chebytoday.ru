@@ -61,16 +61,24 @@ TwitUser:
 Twitter:
   fields:
     # default: screen_name, profile_image_url, friends_count, statuses_count, following, is_cheboksary, state, favourites_count, followers_count, listed_count, name, is_anounced, followed_at, location, source, cheboksary_source
-    default: screen_name, name, twitter, state, list_state, location, source, anounced_at
+    default: screen_name, name, state, list_state, admin_links, location, source, anounced_at, created_at
     # form: screen_name, profile_image_url, friends_count, statuses_count, following, is_cheboksary, state, favourites_count, followers_count, listed_count, name, is_anounced, followed_at, location, source, cheboksary_source
     # show: screen_name, is_location_cheboksary?, following, is_cheboksary, state, favourites_count, followers_count, listed_count, name, is_anounced, followed_at, location, source, cheboksary_source
-  order_by: 
+    options:
+      selectors: state, list_state
+
+  actions:
+    edit: go_to_twitter
+    show: go_to_twitter
+      
+  order_by: -created_at
   relationships: 
   filters: state, list_state
   search: screen_name, name, location, source
   application: chebytoday
   options:
-    default_action_on_item: show
+    action_after_save: index
+    default_action_on_item: edit
     per_page: 50
 
 User:

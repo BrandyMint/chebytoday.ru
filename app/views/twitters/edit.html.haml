@@ -1,7 +1,8 @@
-%h1 Editing twitter
+- title "Edit Twit User"
 
 = render 'form'
 
-= link_to 'Show', @twitter
-\|
-= link_to 'Back', twitters_path
+%p
+  = link_to "Show", twitter_path(@twitter)
+  |
+  = link_to "View All", twitters_path

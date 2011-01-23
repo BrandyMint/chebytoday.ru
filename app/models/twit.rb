@@ -9,7 +9,7 @@ class Twit < ActiveRecord::Base
 
   scope :ordered, order('id desc').includes(:twit_user)
   
-  belongs_to :twit_user
+  belongs_to :twitters
 
   def self.last_status_id
     maximum(:id) || 100000
@@ -54,6 +54,7 @@ class Twit < ActiveRecord::Base
   
 end
 
+
 # == Schema Information
 #
 # Table name: twits
@@ -69,7 +70,7 @@ end
 #  source                  :string(255)
 #  contributors            :string(255)
 #  coordinated             :string(255)
-#  twit_user_id            :integer(8)
+#  twitter_id              :integer(8)
 #  in_reply_to_user_id     :integer(8)
 #  in_reply_to_status_id   :integer(8)
 #  in_reply_to_screen_name :string(255)

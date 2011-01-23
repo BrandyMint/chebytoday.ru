@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110123171137) do
+ActiveRecord::Schema.define(:version => 20110123202243) do
 
   create_table "articles", :force => true do |t|
     t.boolean  "is_mained",    :default => false, :null => false
@@ -125,7 +125,7 @@ ActiveRecord::Schema.define(:version => 20110123171137) do
     t.string   "source"
     t.string   "contributors"
     t.string   "coordinated"
-    t.integer  "twit_user_id",            :limit => 8
+    t.integer  "twitter_id",              :limit => 8
     t.integer  "in_reply_to_user_id",     :limit => 8
     t.integer  "in_reply_to_status_id",   :limit => 8
     t.string   "in_reply_to_screen_name"
@@ -151,12 +151,15 @@ ActiveRecord::Schema.define(:version => 20110123171137) do
     t.datetime "anounced_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "followers_count",                 :default => 0, :null => false
   end
 
   add_index "twitters", ["favourites_count"], :name => "index_twitters_on_favourites_count"
+  add_index "twitters", ["followers_count"], :name => "index_twitters_on_followers_count"
   add_index "twitters", ["friends_count"], :name => "index_twitters_on_friends_count"
   add_index "twitters", ["listed_count"], :name => "index_twitters_on_listed_count"
   add_index "twitters", ["screen_name"], :name => "index_twitters_on_screen_name", :unique => true
+  add_index "twitters", ["source"], :name => "index_twitters_on_source"
   add_index "twitters", ["state"], :name => "index_twitters_on_state"
   add_index "twitters", ["statuses_count"], :name => "index_twitters_on_statuses_count"
   add_index "twitters", ["twitter_created_at"], :name => "index_twitters_on_twitter_created_at"

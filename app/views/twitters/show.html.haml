@@ -1,51 +1,15 @@
-%p#notice= notice
+- title "Twit User"
 
 %p
-  %b Id:
-  = @twitter.id
-%p
-  %b Screen name:
+  %strong Screen Name:
   = @twitter.screen_name
 %p
-  %b Profile image url:
+  %strong Profile Image Url:
   = @twitter.profile_image_url
-%p
-  %b Friends count:
-  = @twitter.friends_count
-%p
-  %b Statuses count:
-  = @twitter.statuses_count
-%p
-  %b Location:
-  = @twitter.location
-%p
-  %b Source:
-  = @twitter.source
-%p
-  %b Is cheboksary:
-  = @twitter.is_cheboksary
-%p
-  %b State:
-  = @twitter.state
-%p
-  %b List status:
-  = @twitter.list_status
-%p
-  %b Favourites count:
-  = @twitter.favourites_count
-%p
-  %b Twitter created at:
-  = @twitter.twitter_created_at
-%p
-  %b Listed count:
-  = @twitter.listed_count
-%p
-  %b Name:
-  = @twitter.name
-%p
-  %b Anounced at:
-  = @twitter.anounced_at
 
-= link_to 'Edit', edit_twitter_path(@twitter)
-\|
-= link_to 'Back', twitters_path
+%p
+  = link_to "Edit", edit_twitter_path(@twitter)
+  |
+  = link_to "Destroy", @twitter, :confirm => 'Are you sure?', :method => :delete
+  |
+  = link_to "View All", twitters_path

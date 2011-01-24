@@ -61,18 +61,19 @@ class Chebytoday
 
     ## Методы по работы с twitter
     
-    def get_user(screen_name)
+    def get_user( h )
       begin
-        client.users.show? :screen_name=>screen_name
+        client.users.show? h #:screen_name=>screen_name
       rescue Grackle::TwitterError => e   # TwitterError
         # raise Twitter::BlockedFollowing.new if
         #   e.message=~/Could not follow user: You have been blocked from following this account at the request of the user/
-        pp e
+        raise unless e.status==404
+          #Notifier.message_error(e).deliver
         # Notifier.message_error(e).deliver unless e.message=~/User has been suspended/
         nil
       rescue => e
-        Notifier.message_error(e).deliver
-        nil
+        # Notifier.message_error(e).deliver
+        raise e
       end
     end
 

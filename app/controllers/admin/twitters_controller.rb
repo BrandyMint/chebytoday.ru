@@ -14,7 +14,13 @@ class Admin::TwittersController < Admin::ResourcesController
 
   def to_foreign
     get_object
-    @item.to_cheboksary
+    @item.to_foreign
+    redirect_to :back
+  end
+
+  def to_unknown
+    get_object
+    @item.to_unknown
     redirect_to :back
   end
 

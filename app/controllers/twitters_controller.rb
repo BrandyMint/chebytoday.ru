@@ -6,6 +6,7 @@ class TwittersController < ApplicationController
   def index
     @twitters = Twitter.cheboksary.order(sort_column + " " + sort_direction)
     @twitter = Twitter.new
+    @newbies = Twitter.newbies
   end
   
   # def show

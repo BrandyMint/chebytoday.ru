@@ -5,9 +5,12 @@ class Twitter < ActiveRecord::Base
   validate :validate_twitter, :if  =>  :adding_from_web?
 
   scope :cheboksary, where( :state => :cheboksary ) # .order("friends_count desc")
-  scope :others, where("state<>'cheboksary'")
+  scope :pull, where( :state => :pull )
   scope :best, cheboksary.limit(5)
   scope :newbies, cheboksary.order('created_at desc').limit(7)
+
+  scope :not_listed, where( :list_state => :none)
+  scope :listed, where( :list_state => :listed)
   
   has_many :twits
 
@@ -20,7 +23,7 @@ class Twitter < ActiveRecord::Base
   #validates_inclusion_of :state, :in => STATE
   
    state_machine :initial => :pull do
-     state :cheboksary, :pull, :foreign
+     state :cheboksary, :pull, :foreign, :unknown
    end
 
   LIST_STATE = %w( listed none blocked )
@@ -36,7 +39,8 @@ class Twitter < ActiveRecord::Base
     end
     def import_from_twit_users
       # destroy_all
-      Twitter.all.map do |t|
+      TwitUser.all.map do |t|
+        next if Twitter.find_by_id t.id
         h = {}
         %w[ screen_name name profile_image_url
           friends_count statuses_count favourites_count listed_count
@@ -51,23 +55,99 @@ class Twitter < ActiveRecord::Base
         w = new h
         w.id = t.id
         # cheboksary, pull, foreign
-        w.to_cheboksary if w.is_cheboksary_granted? || w.cheboksary?
+        w.to_cheboksary 'imported' if w.is_cheboksary_granted? || w.cheboksary?
         w.save!
       end
     end
 
+    def import_from_friends
+      @@chebytoday.friends(true).each do |t|
+        find_or_create t, 'friends'
+      end
+    end
+
     def fuck_foreigns
-      others.select do |t|
-        if (t.source=~/search|status_update/ || t.source.empty?) && t.location && t.location.mb_chars.downcase=~/Moscow|Samara|Kazan|Peters|Yoshkar|Omsk|Kazan|Укра|Minsk|казань/i
+      pull.select do |t|
+        if (t.source=~/search|status_update/ || t.source.empty?) && t.location && t.location.mb_chars.downcase=~/Moscow|Samara|Kazan|Peters|Yoshkar|Omsk|Kazan|Укра|Minsk|казань|москва|ukraine|golen|днепропетр|астраха|gomel|красноярск|kiev|ekaterin|tiraspol|chernigov|gukovo|bryansk|perm|tula|irkutsk|novosib|йошка/ui
           t.update_attribute :state, 'foreign'
         end
       end
     end
+
+    def fuck_duplicates
+      Twitter.select("id, count(*) as count").group(:id).map do |t|
+        next if t.count.to_i==1
+        p "#{t.id}(#{t.count})"
+        if twitter = @@chebytoday.get_user( :id=>t.id )
+          Twitter.where( :id=>t.id ).each do |ta|
+            unless ta.screen_name == twitter.screen_name
+              p "remove #{ta.screen_name}"
+              ta.delete_by_screen_name
+            end
+          end
+        else
+          p "No users with this ID found"
+        end
+      end
+    end
+
+    def import_from_lists
+      import_from_list('chebytoday', 'cheboksary', true)
+      import_from_list('she_stas','che')
+      import_from_list('jonny3D_ru','cheboksary')
+      import_from_list('el_s0litari0','cheboksary')
+      import_from_list('Masher_Kopteva','cheboksary')
+      import_from_list('blackfox_lola','che')
+      import_from_list('lena_trish','cheboksary-chuvashia')
+      import_from_list('pismenny','cheboksary')
+      import_from_list('Radanisk','cheboksary')
+      import_from_list('lexlarri','cheboksary')
+      import_from_list('IrinaDm','chuvashia')
+      import_from_list('svoydom21','cheboksary')
+      import_from_list('michaelgruzdev','hometown')
+      0
+    end
+
+    def import_from_list(user_name, list_name, remove = false)
+      logger.info "Get members of #{user_name}/#{list_name}"
+      @@chebytoday.get_members_of( user_name, list_name ).each { |t|
+        twitter = find_or_create( t, "@#{user_name}/#{list_name}" )
+        @@chebytoday.remove_from_list twitter if remove
+      }
+      0
+    end
+
+    def update_state_listed
+      @@chebytoday.get_members_of('chebytoday','cheboksary').each do |t|
+        twitter = find_or_create t, '@chebytoday/cheboksary'
+        twitter.update_attribute :list_state, 'listed'
+      end
+    end
+
+    def export_to_friends
+      cheboksary.not_listed.each do |twitter|
+        if @@chebytoday.follow( twitter )
+          twitter.update_attribute(:list_state, 'listed')
+        else
+          twitter.update_attribute(:list_state, 'blocked')
+        end
+      end
+    end
+
+    def find_or_create( twit_user, source, grand = true )
+      twitter = find_by_id( twit_user.id ) || Twitter.new( :source => source )
+      twitter.update_from_twitter twit_user
+      twitter.to_cheboksary source if grand && !twitter.cheboksary?
+      twitter.save!
+      twitter
+    end
     
   end
 
-  def to_cheboksary
+  def to_cheboksary( source='manual' )
+    puts "to cheboksary #{self.screen_name} by #{source}"
     update_attribute :state, 'cheboksary'
+    update_attribute :source, source
   end
 
   def to_pull
@@ -89,9 +169,53 @@ class Twitter < ActiveRecord::Base
   def admin_links
     ( "<a href=\"/admin/twitters/to_cheboksary/#{id}\">cheby</a> | " +
       "<a href=\"/admin/twitters/to_foreign/#{id}\">foreign</a> | " +
+      "<a href=\"/admin/twitters/to_unknown/#{id}\">unknown</a> | " +
       "<a href=\"http://twitter.com/#{screen_name}\">@#{screen_name}</a>"
       ).html_safe
   end
+
+  def delete_by_screen_name
+    self.class.delete_all :screen_name => self.screen_name
+  end
+
+  
+  def update_from_twitter( twitter )
+    Twitter.logger.info("update_from_twitter #{twitter.screen_name}") if twitter
+
+    # if twitter
+    #   twitter = @@chebytoday.get_user( twitter.screen_name )
+    #   # А зачем? Пущай заново берет. А то search#near глючные валязят.
+    #   #if !self.twiter_created_at ||
+    #   #  !twitter.created_at
+    # else 
+    #   twitter = @@chebytoday.get_user( screen_name )
+    # end
+    
+    # raise "Can't get user #{twitter.screen_name} from #{src}" unless twitter
+    # return nil unless twitter
+    
+    h = {
+      :profile_image_url => twitter.profile_image_url,
+      :location => twitter.location,
+      :statuses_count => twitter.statuses_count,
+      :friends_count => twitter.friends_count,
+      :favourites_count => twitter.favourites_count,
+      :followers_count => twitter.followers_count,
+      :listed_count => twitter.listed_count,
+      :twitter_created_at => twitter.created_at,
+      :name => twitter.name,
+      :screen_name => twitter.screen_name
+      #      :following => twitter.following,
+      # :source => src
+    }
+
+    self.id = twitter.id unless self.id
+    self.update_attributes h
+    self
+  end
+
+
+
 
   private
 
@@ -122,43 +246,6 @@ class Twitter < ActiveRecord::Base
       errors.add(:screen_name, "Нет такого пользователя в твиттере")
     end
   end
-
-  def set_from_twitter( twitter, src )
-    Twitter.logger.info("set_from_twitter #{twitter.screen_name}") if twitter
-
-    # if twitter
-    #   twitter = @@chebytoday.get_user( twitter.screen_name )
-    #   # А зачем? Пущай заново берет. А то search#near глючные валязят.
-    #   #if !self.twiter_created_at ||
-    #   #  !twitter.created_at
-    # else 
-    #   twitter = @@chebytoday.get_user( screen_name )
-    # end
-    
-    # raise "Can't get user #{twitter.screen_name} from #{src}" unless twitter
-    # return nil unless twitter
-    
-    h = {
-      :profile_image_url => twitter.profile_image_url,
-      :location => twitter.location,
-      :statuses_count => twitter.statuses_count,
-      :friends_count => twitter.friends_count,
-      :favourites_count => twitter.favourites_count,
-      :followers_count => twitter.followers_count,
-      #      :following => twitter.following,
-      :twitter_created_at => twitter.created_at,
-      :listed_count => twitter.listed_count,
-      :name => twitter.name,
-      :screen_name => twitter.screen_name,
-      :source => src
-    }
-
-    self.id = twitter.id  unless self.id
-    self.attributes = h
-    self
-  end
-
-
   
 end
 

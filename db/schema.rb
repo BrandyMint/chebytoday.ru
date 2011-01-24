@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110123202243) do
+ActiveRecord::Schema.define(:version => 20110124095639) do
 
   create_table "articles", :force => true do |t|
     t.boolean  "is_mained",    :default => false, :null => false
@@ -157,6 +157,7 @@ ActiveRecord::Schema.define(:version => 20110123202243) do
   add_index "twitters", ["favourites_count"], :name => "index_twitters_on_favourites_count"
   add_index "twitters", ["followers_count"], :name => "index_twitters_on_followers_count"
   add_index "twitters", ["friends_count"], :name => "index_twitters_on_friends_count"
+  add_index "twitters", ["id"], :name => "index_twitters_on_id", :unique => true
   add_index "twitters", ["listed_count"], :name => "index_twitters_on_listed_count"
   add_index "twitters", ["screen_name"], :name => "index_twitters_on_screen_name", :unique => true
   add_index "twitters", ["source"], :name => "index_twitters_on_source"

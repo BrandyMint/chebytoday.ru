@@ -9,7 +9,7 @@ class Twitter < ActiveRecord::Base
   scope :best, cheboksary.limit(5)
   scope :newbies, cheboksary.order('created_at desc').limit(7)
 
-  scope :not_listed, where( :list_state => :none)
+  scope :to_follow, where( :list_state => :none)
   scope :listed, where( :list_state => :listed)
   
   has_many :twits
@@ -60,12 +60,6 @@ class Twitter < ActiveRecord::Base
       end
     end
 
-    def import_from_friends
-      @@chebytoday.friends(true).each do |t|
-        find_or_create t, 'friends'
-      end
-    end
-
     def fuck_foreigns
       pull.select do |t|
         if (t.source=~/search|status_update/ || t.source.empty?) && t.location && t.location.mb_chars.downcase=~/Moscow|Samara|Kazan|Peters|Yoshkar|Omsk|Kazan|Укра|Minsk|казань|москва|ukraine|golen|днепропетр|астраха|gomel|красноярск|kiev|ekaterin|tiraspol|chernigov|gukovo|bryansk|perm|tula|irkutsk|novosib|йошка/ui
@@ -91,47 +85,60 @@ class Twitter < ActiveRecord::Base
       end
     end
 
-    def import_from_lists
-      import_from_list('chebytoday', 'cheboksary', true)
-      import_from_list('she_stas','che')
-      import_from_list('jonny3D_ru','cheboksary')
-      import_from_list('el_s0litari0','cheboksary')
-      import_from_list('Masher_Kopteva','cheboksary')
-      import_from_list('blackfox_lola','che')
-      import_from_list('lena_trish','cheboksary-chuvashia')
-      import_from_list('pismenny','cheboksary')
-      import_from_list('Radanisk','cheboksary')
-      import_from_list('lexlarri','cheboksary')
-      import_from_list('IrinaDm','chuvashia')
-      import_from_list('svoydom21','cheboksary')
-      import_from_list('michaelgruzdev','hometown')
-      0
-    end
-
-    def import_from_list(user_name, list_name, remove = false)
-      logger.info "Get members of #{user_name}/#{list_name}"
-      @@chebytoday.get_members_of( user_name, list_name ).each { |t|
-        twitter = find_or_create( t, "@#{user_name}/#{list_name}" )
-        @@chebytoday.remove_from_list twitter if remove
-      }
-      0
-    end
-
-    def update_state_listed
-      @@chebytoday.get_members_of('chebytoday','cheboksary').each do |t|
-        twitter = find_or_create t, '@chebytoday/cheboksary'
+    def import_friends
+      @@chebytoday.friends(true).each do |t|
+        twitter = find_or_create t, 'friends'
         twitter.update_attribute :list_state, 'listed'
       end
     end
 
-    def export_to_friends
-      cheboksary.not_listed.each do |twitter|
-        if @@chebytoday.follow( twitter )
+    def export_friends
+      cheboksary.to_follow.each do |twitter|
+        begin
+          logger.info "    Follow to '#{twitter.screen_name}'"
+          @@chebytoday.client.friendships.create!({:screen_name=>twitter.screen_name, :follow=>true})
           twitter.update_attribute(:list_state, 'listed')
-        else
-          twitter.update_attribute(:list_state, 'blocked')
+        rescue Grackle::TwitterError => e
+          if e.message=~/already on your list/
+            twitter.update_attribute(:list_state, 'listed')
+          elsif e.message=~/blocked|Could not follow user: Sorry, this account has been suspended/
+            twitter.update_attribute(:list_state, 'blocked')
+          elsif e.message=~/Not found/
+            twitter.delete_by_screen_name
+          else
+            raise e
+          end
         end
       end
+    end
+
+    def import_from_lists
+      import_from_list('chebytoday', 'cheboksary', true)
+      @@chebytoday.get_lists.each do |list|
+        import_from_list list
+      end
+      # import_from_list('she_stas','che')
+      # import_from_list('jonny3D_ru','cheboksary')
+      # import_from_list('el_s0litari0','cheboksary')
+      # import_from_list('Masher_Kopteva','cheboksary')
+      # import_from_list('blackfox_lola','che')
+      # import_from_list('lena_trish','cheboksary-chuvashia')
+      # import_from_list('pismenny','cheboksary')
+      # import_from_list('Radanisk','cheboksary')
+      # import_from_list('lexlarri','cheboksary')
+      # import_from_list('IrinaDm','chuvashia')
+      # import_from_list('svoydom21','cheboksary')
+      # import_from_list('michaelgruzdev','hometown')
+      0
+    end
+
+    def import_from_list(list, remove = false)
+      logger.info "Get members of #{list.uri}"
+      @@chebytoday.get_members_of( list ).each { |t|
+        twitter = find_or_create( t, list.full_name )
+        @@chebytoday.remove_from_list twitter if remove
+      }
+      0
     end
 
     def find_or_create( twit_user, source, grand = true )
@@ -213,8 +220,6 @@ class Twitter < ActiveRecord::Base
     self.update_attributes h
     self
   end
-
-
 
 
   private

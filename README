@@ -1,11 +1,14 @@
 TODO
+====
 
+Добавить блоги из твиттерян
 
 
 Twitter:
+=======
 
 Способ добавить вручную - поместить в список chebytoday/cheboksary
-Следить за чебоксар-списками друггих твиттерян
+Следить за чебоксар-списками друггих твиттерян и подписываться на них от имени chebytoday
 
 Чебоксарские те, у которых установлено state='cheboksary'
 
@@ -30,7 +33,3 @@ twitter:
 list_state: listed, none, blocked
 state: cheboksary, pull, foreign
 
-
-
-TODO:
-import tyomacooper

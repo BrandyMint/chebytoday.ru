@@ -17,9 +17,20 @@ class Dancer < LoopDance::Dancer
   every 30.minutes do 
     Blog.update_blogs
   end
-  
 
   every 3.hours do
+    wrapper do
+      Twitter.search_near
+    end
+  end
+  
+  every 6.hours do
+    wrapper do 
+      Twitter.anounce
+    end
+  end
+  
+  every 12.hours do
     wrapper do
       Twitter.import_from_lists
     end
@@ -27,10 +38,12 @@ class Dancer < LoopDance::Dancer
 
   every 24.hours do
     wrapper do
+      Twitter.unfollow_foreigns
+      Twitter.unfollow_foreigns2
+    end
+    wrapper do
       Twitter.export_friends
     end
   end
 
-
-  
 end

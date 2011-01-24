@@ -75,22 +75,15 @@ class Chebytoday
     #   end
     # end
 
-    # def search_near_users(page)
-      
-    #   #Twitter::Search.new('near:cheboksary within:30km').
-    #   # geocode(56.1374511,47.2440299,'30.0km').
-    #   # per_page(100).page(page).fetch().
-    #   # results
-    #   wrapper do 
-    #     client[:search].search?(
-    #       :geocode=>'56.1374511,47.2440299,20.0km',
-    #       :result_type=>'recent',
-    #       :page=>page,
-    #       :q=>'near:cheboksary within:20km'
-    #       ).results
-    #   end
-    # end
-
+    def search_near_users(page)
+      client[:search].search?(
+        :geocode=>'56.1374511,47.2440299,20.0km',
+        :result_type=>'recent',
+        :page=>page,
+        :q=>'near:cheboksary within:10km'
+        ).results
+    end
+    
     def get_lists
       lists=[]
       cursor=-1
@@ -156,13 +149,10 @@ class Chebytoday
     #   false
     # end
 
-    # def unfollow(user)
-    #   logger.info "    Unfollow to '#{user.screen_name}'"
-    #   wrapper do
-    #     client.friendships.destroy!({:user_id=>user.id})
-    #     @friends = []
-    #   end
-    # end
+     def unfollow(user)
+       logger.info "    Unfollow to '#{user.screen_name}'"
+       client.friendships.destroy!({:user_id=>user.id})
+     end
 
     def friends( reload=false )
       return @friends unless reload || @friends.empty?

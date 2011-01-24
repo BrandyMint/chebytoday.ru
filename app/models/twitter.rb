@@ -7,16 +7,20 @@ class Twitter < ActiveRecord::Base
   scope :cheboksary, where( :state => :cheboksary ) # .order("friends_count desc")
   scope :pull, where( :state => :pull )
   scope :best, cheboksary.limit(5)
+  scope :other, where("state<>'cheboksary'")
   scope :newbies, cheboksary.order('created_at desc').limit(7)
 
   scope :to_follow, where( :list_state => :none)
   scope :listed, where( :list_state => :listed)
+
+  scope :to_anounce, cheboksary.where( "anounced_at is NULL" )
   
   has_many :twits
 
   # TODO
   # Если добавляют с веба и есть статус foreign, то менять его на pull и ставить источник web
 
+  IS_CHEBOKSARY = [false, true]
 
   STATE = %w( cheboksary pull foreign )
   #STATE = %w(pending encoding encoded error published)
@@ -37,28 +41,28 @@ class Twitter < ActiveRecord::Base
     def logger
       ActiveSupport::LogSubscriber::logger
     end
-    def import_from_twit_users
-      # destroy_all
-      TwitUser.all.map do |t|
-        next if Twitter.find_by_id t.id
-        h = {}
-        %w[ screen_name name profile_image_url
-          friends_count statuses_count favourites_count listed_count
-          location created_at updated_at ].each do |i|
-        h[i] = t.attributes[i.to_s]
-        end
+    # def import_from_twit_users
+    #   # destroy_all
+    #   TwitUser.all.map do |t|
+    #     next if Twitter.find_by_id t.id
+    #     h = {}
+    #     %w[ screen_name name profile_image_url
+    #       friends_count statuses_count favourites_count listed_count
+    #       location created_at updated_at ].each do |i|
+    #     h[i] = t.attributes[i.to_s]
+    #     end
         
-        h[:source] = t.source || t.cheboksary_source || ''
-        h[:twitter_created_at] = t.twiter_created_at
-        h[:anounced_at] = t.created_at if t.is_anounced
+    #     h[:source] = t.source || t.cheboksary_source || ''
+    #     h[:twitter_created_at] = t.twiter_created_at
+    #     h[:anounced_at] = t.created_at if t.is_anounced
         
-        w = new h
-        w.id = t.id
-        # cheboksary, pull, foreign
-        w.to_cheboksary 'imported' if w.is_cheboksary_granted? || w.cheboksary?
-        w.save!
-      end
-    end
+    #     w = new h
+    #     w.id = t.id
+    #     # cheboksary, pull, foreign
+    #     w.to_cheboksary 'imported' if w.is_cheboksary_granted? || w.cheboksary?
+    #     w.save!
+    #   end
+    # end
 
     def fuck_foreigns
       pull.select do |t|
@@ -85,10 +89,21 @@ class Twitter < ActiveRecord::Base
       end
     end
 
-    def import_friends
+    # def import_friends
+    #   @@chebytoday.friends(true).each do |t|
+    #     twitter = find_or_create t, 'friends'
+    #     twitter.update_attribute :list_state, 'listed'
+    #   end
+    # end
+
+    def unfollow_foreigns
+      other.listed.map &:unfollow
+    end
+
+    def unfollow_foreigns2
       @@chebytoday.friends(true).each do |t|
-        twitter = find_or_create t, 'friends'
-        twitter.update_attribute :list_state, 'listed'
+        twitter = find_or_create t, 'friends', false
+        twitter.unfollow unless twitter.cheboksary?
       end
     end
 
@@ -148,7 +163,62 @@ class Twitter < ActiveRecord::Base
       twitter.save!
       twitter
     end
+
+    def is_cheboksary?( location )
+      (location && location.mb_chars.downcase=~/n-check|nchk|novochebok|cheboxa|cheboks|chuvashi|ебокса|чуваш|tsjebok|.*56\.1.*47\.2.*/i) ? true : false
+    end
+  
+    def search_near(pages=10)
+      puts "Search for users near cheboksary"
+      #http://search.twitter.com/search?geocode=56.1374511%2C47.2440299%2C50.0km&max_id=21075586190&page=3&q=+near%3Acheboksary+within%3A50km#
+      #.since(h[:since_id] || 0)
+      #16776 den_rad
+      c=0
+      for page in 1..pages do
+        r = @@chebytoday.search_near_users(page)
+        if r        
+          r.each { |t|
+            if is_cheboksary? t.location
+              user = @@chebytoday.get_user :id=>t.from_user_id
+              if user && is_cheboksary?( user.location )
+                puts "Add user #{user.id}/#{user.screen_name} from #{user.location}"
+                find_or_create( user, 'search#near(from)')
+                c+=1
+              end
+              user = @@chebytoday.get_user :id=>t.to_user_id
+              if user && is_cheboksary?( user.location )
+                puts "Add user #{user.id}/#{user.screen_name} from #{user.location}"
+                find_or_create( user, 'search#near(to)')
+                c+=1
+              end
+            end
+          }
+        else
+          break
+        end
+      end
+      puts "  new users found: #{c}" if c>0
+    end
     
+    def anounce
+      message="Новые чебоксарцы: "
+      to_anounce.each { |user|
+        str=message[-2,1]==':' ? '@' : ", @"
+        str+=user.screen_name
+        break if message.length+str.length>120
+        message+=str
+        user.update_attribute(:anounced_at, Time.now())
+        #pp user.screen_name
+      }
+      @@chebytoday.update_status(message)
+    end
+    
+    
+    
+  end
+
+  def is_cheboksary
+    self.class.is_cheboksary? self.location
   end
 
   def to_cheboksary( source='manual' )
@@ -158,19 +228,44 @@ class Twitter < ActiveRecord::Base
   end
 
   def to_pull
+    was_state = state
     update_attribute :state, 'pull'
+    unfollow if was_state=='cheboksary'
   end
 
   def to_foreign
     update_attribute :state, 'foreign'
-  end
-
-  def is_location_cheboksary?
-    self.location && self.location.mb_chars.downcase=~/n-check|nchk|novochebok|cheboxa|cheboks|chuvashi|ебокса|чуваш|tsjebok|.*56\.1.*47\.4.*/i
+    unfollow if was_state=='cheboksary'
   end
   
-  def is_cheboksary_granted?
-    is_location_cheboksary? || source=~/cheboksary|chuvash/i
+  def to_unknown
+    update_attribute :state, 'unknown'
+    unfollow if was_state=='cheboksary'
+  end
+
+  def to_none
+    update_attribute(:list_state, 'none')
+    update_attribute(:state, 'foreign') if cheboksary?
+  end
+
+  # def is_cheboksary_granted?
+  #   is_location_cheboksary? || source=~/cheboksary|chuvash/i
+  # end
+
+  def unfollow
+    puts "Unfollow '#{screen_name}'"
+    @@chebytoday.unfollow self
+    to_none
+  rescue Grackle::TwitterError => e
+    if e.message=~/You are not friends/
+      to_none
+      # elsif e.message=~/blocked|Could not follow user: Sorry, this account has been suspended/
+      #   twitter.update_attribute(:list_state, 'blocked')
+      # elsif e.message=~/Not found/
+      #   twitter.delete_by_screen_name
+    else
+      raise e
+    end
   end
 
   def admin_links
@@ -217,10 +312,17 @@ class Twitter < ActiveRecord::Base
     }
 
     self.id = twitter.id unless self.id
+    if twitter.following && !self.listed?
+      self.update_attribute :list_state, 'listed'
+    end
+    if !twitter.following && self.listed?
+      self.update_attribute :list_state, 'none'
+    end
+    
     self.update_attributes h
     self
   end
-
+  
 
   private
 

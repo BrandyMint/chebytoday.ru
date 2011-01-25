@@ -115,9 +115,11 @@ class Twitter < ActiveRecord::Base
     end
 
     def unfollow_foreigns2
-      @@chebytoday.friends(true).each do |t|
-        twitter = find_or_create t, 'friends', false
-        twitter.unfollow unless twitter.cheboksary?
+      @@chebytoday.friends(self).each do |t|
+        if twitter = find_by_id( t.id )
+          #twitter = find_or_create t, 'friends', false
+          twitter.unfollow unless twitter.cheboksary?
+        end
       end
     end
 

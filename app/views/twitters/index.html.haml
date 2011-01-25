@@ -19,18 +19,22 @@
       %th &#8470;
       %th= sortable 'screen_name', "Twitter"
       %th= sortable 'name', "Имя"
-      %th= sortable 'followers_count', "Follows"
+      %th= sortable 'followers_count', "Друзей"
       -# %th= sortable 'favourites_count', "Favs"
       -# %th= sortable "Ретвитов"
       -# %th= sortable 'listed_count', "Lists"
       -# %th= sortable 'twitter_created_at', "Days"
-      %th= sortable 'statuses_count',  'Statuses'
-      %th= sortable 'source',  'Источник'
+      %th= sortable 'statuses_count', 'Статусов'
+      %th= sortable 'source', 'Источник'
     - counter=0
     - @twitters.each do |user|
       %tr
         %td= "#{counter+=1}."
-        %td= link_to image_tag(user.profile_image_url,:class=>'profile_image')+" #{user.screen_name}","http://twitter.com/#{user.screen_name}",:title=>user.name
+        %td
+          - link = "http://twitter.com/#{user.screen_name}"
+          - if current_user && current_user.is_admin?
+            - link = "/admin/twitters/show/#{user.id}"
+          = link_to image_tag(user.profile_image_url,:class=>'profile_image')+" #{user.screen_name}", link, :title=>user.name
         %td= user.name
         %td= user.followers_count
         -# %td= user.favourites_count
@@ -39,5 +43,9 @@
         -# %td= distance_of_time_in_words_to_now(user.twitter_created_at)
         %td= user.statuses_count
         %td
-          %i.gray.small= user.source
+          %i.gray.small
+            = user.source
+            %br
+            = user.location
+          
 

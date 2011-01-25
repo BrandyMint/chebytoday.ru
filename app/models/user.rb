@@ -12,6 +12,10 @@ class User < ActiveRecord::Base
   
   has_many :blogs
   has_many :articles, :through=>:blog
+
+  def is_admin?
+    role=='admin'
+  end
   
 end
 

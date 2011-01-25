@@ -4,14 +4,13 @@ require 'lib/chebytoday'
 
 class Dancer < LoopDance::Dancer
 
-  disable_autostart
+  start_timeout = 60
+  stop_timeout = 60
 
   def wrapper(&block)
-    begin
-      block.call
-    rescue => e
-      Notifier.message_error(e).deliver
-    end
+    block.call
+  rescue => e
+    Notifier.message_error(e).deliver
   end
   
   every 30.minutes do 

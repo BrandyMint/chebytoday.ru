@@ -53,9 +53,8 @@ namespace :vlad do
 
   desc "Restart dancers"
   remote_task :restart_dancers do
-
-    puts "Restart dancers"
-    run "cd #{current_release}; RAILS_ENV=production rake loop_dance:restart_all"
+    puts "Restart dancers #{current_release}"
+    run "cd #{current_release}; RAILS_ENV=production rake loop_dance:dancer:restart"
   end
   
   # # Add an after_update hook

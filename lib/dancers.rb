@@ -18,6 +18,13 @@ class Dancer < LoopDance::Dancer
     Blog.update_blogs
   end
 
+  every 30.minutes do
+    wrapper do
+      Twitter.update_stats
+      Twitter.anounce
+    end
+  end
+
   every 3.hours do
     wrapper do
       Twitter.search_near

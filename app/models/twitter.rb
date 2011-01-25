@@ -10,10 +10,13 @@ class Twitter < ActiveRecord::Base
   scope :other, where("state<>'cheboksary'")
   scope :newbies, cheboksary.order('created_at desc').limit(7)
 
+
   scope :to_follow, where( :list_state => :none)
   scope :listed, where( :list_state => :listed)
 
   scope :to_anounce, cheboksary.where( "anounced_at is NULL" )
+  
+  scope :to_update, cheboksary.listed.order('updated_at asc').limit(50)
   
   has_many :twits
 
@@ -64,6 +67,17 @@ class Twitter < ActiveRecord::Base
     #   end
     # end
 
+    def update_stats
+      to_update.each do |twitter|
+        puts "Update @#{twitter.screen_name}"
+        twitter.wrapper do
+          user = @@chebytoday.client.users.show? :id => twitter.id
+          twitter.update_from_twitter user if user
+          twitter.load_friends
+        end
+      end
+    end
+
     def fuck_foreigns
       pull.select do |t|
         if (t.source=~/search|status_update/ || t.source.empty?) && t.location && t.location.mb_chars.downcase=~/Moscow|Samara|Kazan|Peters|Yoshkar|Omsk|Kazan|Укра|Minsk|казань|москва|ukraine|golen|днепропетр|астраха|gomel|красноярск|kiev|ekaterin|tiraspol|chernigov|gukovo|bryansk|perm|tula|irkutsk|novosib|йошка/ui
@@ -109,20 +123,10 @@ class Twitter < ActiveRecord::Base
 
     def export_friends
       cheboksary.to_follow.each do |twitter|
-        begin
+        twitter.wrapper do
           logger.info "    Follow to '#{twitter.screen_name}'"
           @@chebytoday.client.friendships.create!({:screen_name=>twitter.screen_name, :follow=>true})
           twitter.update_attribute(:list_state, 'listed')
-        rescue Grackle::TwitterError => e
-          if e.message=~/already on your list/
-            twitter.update_attribute(:list_state, 'listed')
-          elsif e.message=~/blocked|Could not follow user: Sorry, this account has been suspended/
-            twitter.update_attribute(:list_state, 'blocked')
-          elsif e.message=~/Not found/
-            twitter.delete_by_screen_name
-          else
-            raise e
-          end
         end
       end
     end
@@ -212,19 +216,33 @@ class Twitter < ActiveRecord::Base
       }
       @@chebytoday.update_status(message)
     end
-    
-    
-    
+  end
+  
+  def load_friends
+    @@chebytoday.friends( self ).each do |friend|
+      if self.class.is_cheboksary?( friend.location )
+        puts "Add user @#{friend.screen_name} from #{friend.location} is a friend of @x#{screen_name}"
+        self.class.find_or_create( friend, "@#{friend.screen_name}#friends" )
+      end
+    end
   end
 
   def is_cheboksary
     self.class.is_cheboksary? self.location
   end
 
+  def to_s
+    screen_name
+  end
+
   def to_cheboksary( source='manual' )
     puts "to cheboksary #{self.screen_name} by #{source}"
     update_attribute :state, 'cheboksary'
     update_attribute :source, source
+  end
+
+  def to_blocked
+    update_attribute(:list_state, 'blocked')
   end
 
   def to_pull
@@ -234,11 +252,13 @@ class Twitter < ActiveRecord::Base
   end
 
   def to_foreign
+    was_state = state
     update_attribute :state, 'foreign'
     unfollow if was_state=='cheboksary'
   end
   
   def to_unknown
+    was_state = state
     update_attribute :state, 'unknown'
     unfollow if was_state=='cheboksary'
   end
@@ -282,19 +302,7 @@ class Twitter < ActiveRecord::Base
 
   
   def update_from_twitter( twitter )
-    Twitter.logger.info("update_from_twitter #{twitter.screen_name}") if twitter
-
-    # if twitter
-    #   twitter = @@chebytoday.get_user( twitter.screen_name )
-    #   # А зачем? Пущай заново берет. А то search#near глючные валязят.
-    #   #if !self.twiter_created_at ||
-    #   #  !twitter.created_at
-    # else 
-    #   twitter = @@chebytoday.get_user( screen_name )
-    # end
-    
-    # raise "Can't get user #{twitter.screen_name} from #{src}" unless twitter
-    # return nil unless twitter
+    Twitter.logger.info("update_from_twitter #{twitter.screen_name}")
     
     h = {
       :profile_image_url => twitter.profile_image_url,
@@ -314,13 +322,28 @@ class Twitter < ActiveRecord::Base
     self.id = twitter.id unless self.id
     if twitter.following && !self.listed?
       self.update_attribute :list_state, 'listed'
+      self.to_cheboksary 'autolister' unless self.cheboksary?
     end
     if !twitter.following && self.listed?
       self.update_attribute :list_state, 'none'
     end
-    
+    self.touch
     self.update_attributes h
     self
+  end
+
+  def wrapper( &block )
+    block.call
+  rescue Grackle::TwitterError => e
+    if e.message=~/already on your list/
+      twitter.update_attribute(:list_state, 'listed')
+    elsif e.message=~/blocked|Could not follow user: Sorry, this account has been suspended/
+      twitter.to_blocked
+    elsif e.message=~/Not found/
+      twitter.delete_by_screen_name
+    else
+      raise e
+    end
   end
   
 

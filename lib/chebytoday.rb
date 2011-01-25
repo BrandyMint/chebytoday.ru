@@ -154,19 +154,15 @@ class Chebytoday
        client.friendships.destroy!({:user_id=>user.id})
      end
 
-    def friends( reload=false )
-      return @friends unless reload || @friends.empty?
+    def friends( user )
       cursor=-1
-      @friends = []
-#      wrapper do
+      friends = []
       begin 
-        list = client.statuses.friends?({ :screen_name=>'chebytoday', :cursor=>cursor })
-        @friends = @friends + list.users
+        list = client.statuses.friends?({ :screen_name=>user.screen_name, :cursor=>cursor })
+        friends = friends + list.users
         cursor = list.next_cursor
       end while list.next_cursor>0
-#      end
-      
-      @friends
+      friends
     end
 
     def send_direct_message(user, message)

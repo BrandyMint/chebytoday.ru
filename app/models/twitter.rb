@@ -221,7 +221,7 @@ class Twitter < ActiveRecord::Base
         user.update_attribute(:anounced_at, Time.now())
         #pp user.screen_name
       }
-      puts "Anounce: #{mesasge}"
+      puts "Anounce: #{message}"
       @@chebytoday.update_status(message)
     end
   end

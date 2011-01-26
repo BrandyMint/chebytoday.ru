@@ -17,10 +17,6 @@ class Dancer < LoopDance::Dancer
     end
   end
 
-  every 30.minutes do 
-    Blog.update_blogs
-  end
-
   every 1.hours do
     wrapper do
       Twitter.update_stats
@@ -49,11 +45,16 @@ class Dancer < LoopDance::Dancer
   every 24.hours do
     wrapper do
       Twitter.unfollow_foreigns
-      Twitter.unfollow_foreigns2
+      Twitter.clean_uncheboksared
     end
     wrapper do
       Twitter.export_friends
     end
   end
+
+  every 30.minutes do 
+    Blog.update_blogs
+  end
+
 
 end

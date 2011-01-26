@@ -115,8 +115,8 @@ class Twitter < ActiveRecord::Base
       other.listed.map &:unfollow
     end
 
-    def unfollow_foreigns2
-      @@chebytoday.friends(self).each do |t|
+    def clean_uncheboksared
+      @@chebytoday.friends(find_by_screen_name 'chebytoday').each do |t|
         if twitter = find_by_id( t.id )
           #twitter = find_or_create t, 'friends', false
           twitter.unfollow unless twitter.cheboksary?
@@ -126,6 +126,7 @@ class Twitter < ActiveRecord::Base
 
     def export_friends
       cheboksary.to_follow.each do |twitter|
+        next if twitter.screen_name=='chebytoday'
         twitter.wrapper do
           logger.info "    Follow to '#{twitter.screen_name}'"
           @@chebytoday.client.friendships.create!({:screen_name=>twitter.screen_name, :follow=>true})
@@ -135,7 +136,9 @@ class Twitter < ActiveRecord::Base
     end
 
     def import_from_lists
-      import_from_list('chebytoday', 'cheboksary', true)
+      import_from_list(
+        OpenStruct.new( :uri=>'/chebytoday/cheboksary', :full_name=>'@chebytoday/cheboksary' ),
+        true)
       @@chebytoday.get_lists.each do |list|
         import_from_list list
       end
@@ -156,7 +159,7 @@ class Twitter < ActiveRecord::Base
 
     def import_from_list(list, remove = false)
       logger.info "Get members of #{list.uri}"
-      @@chebytoday.get_members_of( list ).each { |t|
+      @@chebytoday.get_members_of( list.uri ).each { |t|
         twitter = find_or_create( t, list.full_name )
         @@chebytoday.remove_from_list twitter if remove
       }
@@ -251,10 +254,14 @@ class Twitter < ActiveRecord::Base
     screen_name
   end
 
-  def to_cheboksary( source='manual' )
-    puts "to cheboksary #{self.screen_name} by #{source}"
-    update_attribute :state, 'cheboksary'
-    update_attribute :source, source
+  def to_cheboksary( source='manual', force=false )
+    if state=='foreign'
+      puts "Can't move to cheboksary foreigned user @#{self.screen_name} by #{source}"
+    else
+      puts "to cheboksary @#{self.screen_name} by #{source}"
+      update_attribute :state, 'cheboksary'
+      update_attribute :source, source
+    end
   end
 
   def to_blocked
@@ -352,11 +359,11 @@ class Twitter < ActiveRecord::Base
     block.call
   rescue Grackle::TwitterError => e
     if e.message=~/already on your list/
-      twitter.update_attribute(:list_state, 'listed')
+      update_attribute(:list_state, 'listed')
     elsif e.message=~/blocked|Could not follow user: Sorry, this account has been suspended/
-      twitter.to_blocked
+      to_blocked
     elsif e.message=~/Not found/
-      twitter.delete_by_screen_name
+      delete_by_screen_name
     else
       raise e
     end

@@ -39,7 +39,7 @@ class Chebytoday
       rescue Grackle::TwitterError => e   # TwitterError
         # raise Twitter::BlockedFollowing.new if
         #   e.message=~/Could not follow user: You have been blocked from following this account at the request of the user/
-        raise e unless e.status==404
+        raise e unless e.status==404 || e.status==403
           #Notifier.message_error(e).deliver
         # Notifier.message_error(e).deliver unless e.message=~/User has been suspended/
         nil
@@ -95,10 +95,9 @@ class Chebytoday
       lists
     end
     
-    def get_members_of(list)
+    def get_members_of(uri)
       members=[]
       cursor=-1
-      uri = list.uri
       uri.gsub!(/^\//,'')
 #      wrapper do
       begin

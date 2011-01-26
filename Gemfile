@@ -16,7 +16,7 @@ if `hostname`=~/dapi/
   gem 'loop_dance', :path => '/home/danil/code/gems/loop_dance'
   #   gem 'stateful_link', :path => '/home/danil/code/gems/stateful_link/'
 else
-  gem 'loop_dance', '~> 0.4.5'
+  gem 'loop_dance', '~> 0.4.6'
   #   #gem 'stateful_link', :git => 'git://github.com/gzigzigzeo/stateful_link.git'
 end
 

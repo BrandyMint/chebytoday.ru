@@ -75,6 +75,7 @@ class Twitter < ActiveRecord::Base
           twitter.update_from_twitter user if user
           twitter.load_friends
         end
+        break if twitter.followers_count>5000
       end
     end
 
@@ -207,6 +208,7 @@ class Twitter < ActiveRecord::Base
     end
     
     def anounce
+      return if to_anounce.count==0
       message="Новые чебоксарцы: "
       to_anounce.each { |user|
         str=message[-2,1]==':' ? '@' : ", @"
@@ -216,17 +218,29 @@ class Twitter < ActiveRecord::Base
         user.update_attribute(:anounced_at, Time.now())
         #pp user.screen_name
       }
+      puts "Anounce: #{mesasge}"
       @@chebytoday.update_status(message)
     end
   end
   
   def load_friends
-    @@chebytoday.friends( self ).each do |friend|
-      if self.class.is_cheboksary?( friend.location )
-        puts "Add user @#{friend.screen_name} from #{friend.location} is a friend of @x#{screen_name}"
-        self.class.find_or_create( friend, "@#{friend.screen_name}#friends" )
+    cursor=-1
+    c=0
+    begin
+      print '.'
+      list = @@chebytoday.client.statuses.friends?({ :screen_name=>self.screen_name, :cursor=>cursor })
+      list.users.each do  |friend|
+        if self.class.is_cheboksary?( friend.location )
+          unless self.class.find_by_id friend.id
+            puts "Add user @#{friend.screen_name} from #{friend.location} is a friend of @#{screen_name}"
+            self.class.find_or_create( friend, "@#{friend.screen_name}#friends" )
+            c+=1
+          end
+        end
       end
-    end
+      cursor = list.next_cursor
+    end while list.next_cursor>0
+    puts "Friends loaded: #{c}" if c>0
   end
 
   def is_cheboksary

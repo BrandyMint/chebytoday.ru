@@ -4,20 +4,24 @@ require 'lib/chebytoday'
 
 class Dancer < LoopDance::Dancer
 
-  start_timeout = 60
-  stop_timeout = 60
+  @start_timeout = 60
+  @stop_timeout = 60
+  @log_file_activity_timeout = 20
+  @trap_signals = false
 
-  def wrapper(&block)
-    block.call
-  rescue => e
-    Notifier.message_error(e).deliver
+  class << self
+    def wrapper(&block)
+      block.call
+    rescue => e
+      Notifier.message_error(e).deliver
+    end
   end
-  
+
   every 30.minutes do 
     Blog.update_blogs
   end
 
-  every 30.minutes do
+  every 1.hours do
     wrapper do
       Twitter.update_stats
       Twitter.anounce

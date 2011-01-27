@@ -39,7 +39,7 @@ class Chebytoday
       rescue Grackle::TwitterError => e   # TwitterError
         # raise Twitter::BlockedFollowing.new if
         #   e.message=~/Could not follow user: You have been blocked from following this account at the request of the user/
-        raise e unless e.status==404 || e.status==403
+        raise e unless e.status==404 || e.status==403 || e.message=~/User has been suspended|Connection reset by peer|Unable to decode|Rate limit/
           #Notifier.message_error(e).deliver
         # Notifier.message_error(e).deliver unless e.message=~/User has been suspended/
         nil

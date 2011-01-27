@@ -23,6 +23,11 @@ class Dancer < LoopDance::Dancer
   end
 
 
+  every 24.hours do 
+    Blog.update_yandex_rating
+  end
+
+
   every 1.hours do
     wrapper do
       Twitter.update_stats

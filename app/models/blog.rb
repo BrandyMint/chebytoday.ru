@@ -17,8 +17,15 @@ class Blog < ActiveRecord::Base
     end
   end
 
+  def self.update_yandex_rating
+    all.each do |b|
+      b.update_yandex_rating
+    end
+  end
+
+
   def update_blog
-    update_attribute(:link,"http://#{author}.livejournal.com/") 
+    # update_attribute(:link,"http://#{author}.livejournal.com/") 
     pp self.rss_link
     update_from_feed
     #update_yandex_rating

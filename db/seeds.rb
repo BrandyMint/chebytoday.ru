@@ -8,10 +8,10 @@
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 
-Politic.create({ :name=>'Письменный Данил Викторович', :title=>'Президент ассоциации микроблоггеров Чувашской республики', :desc=>'This file should contain all the record creation needed to seed the database with its default values. The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).' })
+# Politic.create({ :name=>'Письменный Данил Викторович', :title=>'Президент ассоциации микроблоггеров Чувашской республики', :desc=>'This file should contain all the record creation needed to seed the database with its default values. The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).' })
 
-BlogSource.create({:author=>'Данил Письменный', :name=>'Данил Письменный', :link=>'http://dapi.livejournal.com/data/rss'})
-BlogSource.create({:author=>'Этнер Егоров', :name=>'Этнер Егоров', :link=>'http://atner.livejournal.com/data/rss'})
+# BlogSource.create({:author=>'Данил Письменный', :name=>'Данил Письменный', :link=>'http://dapi.livejournal.com/data/rss'})
+# BlogSource.create({:author=>'Этнер Егоров', :name=>'Этнер Егоров', :link=>'http://atner.livejournal.com/data/rss'})
 
 blogs = %w(
           4ichili
@@ -153,7 +153,9 @@ waterzz
 rendi-3d
 )
 
+
 blogs.each do |blog|
   rss = "http://#{blog}.livejournal.com/data/rss"
-  BlogSource.create({:author=>blog, :name=>blog, :link=>rss}) unless BlogSource.find_by_link(rss)
+  link = "http://#{blog}.livejournal.com/"
+  Blog.create({:author=>blog, :name=>blog, :link=>rss, :rss_link=>rss}) unless Blog.find_by_link(link)
 end

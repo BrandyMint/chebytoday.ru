@@ -13,7 +13,8 @@ class Dancer < LoopDance::Dancer
     def wrapper(&block)
       block.call
     rescue => e
-      Notifier.message_error(e).deliver
+      Notifier.message_error(e).deliver unless
+        e.message=~/Rate limit exceeded|Unable to decode|/
     end
   end
 

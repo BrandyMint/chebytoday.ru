@@ -216,9 +216,9 @@ class Twitter < ActiveRecord::Base
       to_anounce.each { |user|
         str=message[-2,1]==':' ? '@' : ", @"
         str+=user.screen_name
+        user.update_attribute(:anounced_at, Time.now())
         break if message.length+str.length>120
         message+=str
-        user.update_attribute(:anounced_at, Time.now())
         #pp user.screen_name
       }
       puts "Anounce: #{message}"

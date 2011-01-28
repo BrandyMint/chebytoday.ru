@@ -2,7 +2,10 @@ class ArticlesController < ApplicationController
   
   def index
     respond_to do |format|
-      format.html { @articles = Article.paginate :page=>(params[:page] || 1), :per_page=>(params[:per_page] || 10) }
+      format.html do
+        @articles = Article.paginate :page=>(params[:page] || 1), :per_page=>(params[:per_page] || 10)
+        @newbies = Twitter.newbies
+      end
       format.rss  { @articles = Article.feed }
     end
   end

@@ -26,7 +26,7 @@ class Blog < ActiveRecord::Base
 
   def update_blog
     # update_attribute(:link,"http://#{author}.livejournal.com/") 
-    pp self.rss_link
+    pp self.link
     update_from_feed
     #update_yandex_rating
   end
@@ -38,6 +38,7 @@ class Blog < ActiveRecord::Base
   end
 
   def update_yandex_rating
+    pp self.link
     doc = Hpricot(open("http://blogs.yandex.ru/top/?username=#{author}"))
     #block = doc.search("tr[@id='#{author}']")
     block = doc.search("tr[@class='found']")

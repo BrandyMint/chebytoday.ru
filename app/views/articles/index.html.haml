@@ -2,15 +2,9 @@
 
 #sidebar
 
-  %h2 Блоггеры
-  %ul#authors
-    - Blog.active.each do |blog|
-      %li
-        =user blog
-    %li= link_to "&hellip;".html_safe, blogs_url
-  .clear
-  %br
-  .right= link_to "Полный список &rarr;".html_safe, blogs_url
+  = render 'twitters/newbies'
+
+  = render "blogs/active_blogs" 
 
 
 

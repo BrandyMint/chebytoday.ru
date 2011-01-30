@@ -154,8 +154,13 @@ rendi-3d
 )
 
 
-blogs.each do |blog|
-  rss = "http://#{blog}.livejournal.com/data/rss"
-  link = "http://#{blog}.livejournal.com/"
-  Blog.create({:author=>blog, :name=>blog, :link=>rss, :rss_link=>rss}) unless Blog.find_by_link(link)
-end
+# blogs.each do |blog|
+#   rss = "http://#{blog}.livejournal.com/data/rss"
+#   link = "http://#{blog}.livejournal.com/"
+#   Blog.create({:author=>blog, :name=>blog, :link=>rss, :rss_link=>rss}) unless Blog.find_by_link(link)
+# end
+
+Blog.create( :author => 'irarura',
+             :link => 'http://infohappy.ru/',
+             :rss_link => 'http://infohappy.ru/feed/rss',
+             :title => 'InfoHappy.ru' )

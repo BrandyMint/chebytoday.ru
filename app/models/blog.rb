@@ -13,7 +13,7 @@ class Blog < ActiveRecord::Base
 
   def self.update_blogs
     all.each do |b|
-      b.update_blog
+      b.update_feed
     end
   end
 
@@ -23,18 +23,14 @@ class Blog < ActiveRecord::Base
     end
   end
 
-
-  def update_blog
-    # update_attribute(:link,"http://#{author}.livejournal.com/") 
+  def update_feed
     pp self.link
-    update_from_feed
-    #update_yandex_rating
-  end
-
-  def update_from_feed
     feed = Feedzirra::Feed.fetch_and_parse rss_link
-    return unless feed.kind_of? Feedzirra::Parser::RSS
-    add_articles feed.entries
+    if feed.kind_of? Feedzirra::Parser::RSS
+      add_articles feed.entries
+    else
+      puts "Error parsing #{rss_link}"
+    end
   end
 
   def update_yandex_rating

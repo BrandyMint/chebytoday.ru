@@ -28,6 +28,10 @@
       .clear
       #hdesc
         Общая лента блоггеров Чувашии.<br>Обнавляется каждые пол часа, сегодня уже&nbsp;<b>#{today_articles.html_safe}</b>.
+
+        .ad
+          Объявление: 
+          = link_to 'Требуется ruby-программист на фулл-тайм в Чебосарах', 'https://docs.google.com/document/pub?id=1196rRixBpNSeNDvnPL2UUuBGjuStcxYTfR4M2Z3Bl-Y'
       = render :partial=>"common/submenu"
     #container
 

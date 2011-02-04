@@ -46,8 +46,9 @@ namespace :vlad do
       vlad:migrate
       vlad:start_web
       vlad:restart_dancers
+      vlad:cleanup
     ]
-#      vlad:cleanup
+  
 
   # 
 
@@ -97,7 +98,7 @@ namespace :vlad do
   remote_task :bundle do
     puts "Exec bundle"
     #run "cd #{current_release}; sudo bundle install --deployment" # На FreeBSD только через sudo
-    run "cd #{current_release}; sudo bundle --without development --without test" # На FreeBSD только через sudo
+    run "cd #{current_release}; bundle --without development --without test" # На FreeBSD только через sudo
     # chown current_release after bundle
   end
 

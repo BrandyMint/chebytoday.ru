@@ -54,7 +54,6 @@ group :development, :test do
   gem "rails3-generators"
   gem "nifty-generators"
   gem "metric_fu"
-  gem 'awesome_print', :require => 'ap'
   gem 'wirble', :require => 'wirble'
   gem "mocha", :group => :test
   #gem 'limerick_rake', :git => "http://github.com/dapi/limerick_rake.git", :branch => "rails3"

@@ -4,10 +4,10 @@ require 'lib/chebytoday'
 
 class Dancer < LoopDance::Dancer
 
-  @start_timeout = 60
-  @stop_timeout = 60
-  @log_file_activity_timeout = 20
-  @trap_signals = false
+  start_timeout 40
+  stop_timeout 10
+  log_file_activity_timeout 20
+  trap_signals false
 
   class << self
     def wrapper(&block)

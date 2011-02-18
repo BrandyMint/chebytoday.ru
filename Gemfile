@@ -16,7 +16,7 @@ if `hostname`=~/dapi/
   gem 'loop_dance', :path => '/home/danil/code/gems/loop_dance'
   #   gem 'stateful_link', :path => '/home/danil/code/gems/stateful_link/'
 else
-  gem 'loop_dance', '~> 0.4.6'
+  gem 'loop_dance', '~> 0.5.3'
   #   #gem 'stateful_link', :git => 'git://github.com/gzigzigzeo/stateful_link.git'
 end
 
@@ -48,8 +48,8 @@ group :development, :test do
   gem 'ruby-debug'
   gem 'rack-bug'
   gem 'vlad'
-  gem 'hpricot'
   gem 'vlad-git'
+  gem 'hpricot'
   gem 'rcov'
   gem "rails3-generators"
   gem "nifty-generators"

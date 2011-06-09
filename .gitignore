@@ -33,4 +33,3 @@ tmp/*
 db/*.sqlite3
 log/*.lock
 log/*
-Gemfile.lock

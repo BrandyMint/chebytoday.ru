@@ -1,1 +1,1 @@
-rvm default
+rvm ree@planposter --create

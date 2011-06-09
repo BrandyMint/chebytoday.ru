@@ -3,25 +3,24 @@
 module Grackle
   # Когда пользователь нас заблокировал отфолловинга
   class BlockedFollowing < StandardError
-  end  
-  
-class Chebytoday
+  end
 
+  class Chebytoday
 
     attr_reader :client
     #cattr_reader :instance
-  
+
     def initialize
       @client = Grackle::Client.new(:auth=>{
-                                      :type=>:oauth,
-                                      :consumer_key=>APP_CONFIG[:twitter]['consumer_key'], :consumer_secret=>APP_CONFIG[:twitter]['consumer_secret'],
-                                      :token=>APP_CONFIG[:twitter]['oauth_token'], :token_secret=>APP_CONFIG[:twitter]['oauth_token_secret']
-                                    },
-                                    :auto_append_ids=>false)
+          :type=>:oauth,
+          :consumer_key=>APP_CONFIG[:twitter]['consumer_key'], :consumer_secret=>APP_CONFIG[:twitter]['consumer_secret'],
+          :token=>APP_CONFIG[:twitter]['oauth_token'], :token_secret=>APP_CONFIG[:twitter]['oauth_token_secret']
+        },
+        :auto_append_ids=>false)
       @@instance=self
       @friends=[]
     end
-    
+
     # def self.client
     #   instance.client
     # end
@@ -32,7 +31,7 @@ class Chebytoday
 
 
     ## Методы по работы с twitter
-    
+    #
     def get_user( h )
       begin
         client.users.show? h #:screen_name=>screen_name
@@ -49,7 +48,7 @@ class Chebytoday
       end
     end
 
-    
+
     # def update_statuses(since_id)
     #   h={:count=>200,:per_page=>200,:since_id=>since_id}
     #   logger.info "Get homeline, since #{h[:since_id]}"
@@ -60,7 +59,7 @@ class Chebytoday
     #     logger.info "  statuses created: #{c}" if c>0
     #   end
     # end
-    
+
     # def update_search_statuses(since_id)
     #   #c=Twitter::Search.new('#cheboksary').since(since || 0).per_page(100).fetch().results.
     #   wrapper do
@@ -83,7 +82,7 @@ class Chebytoday
         :q=>'near:cheboksary within:10km'
         ).results
     end
-    
+
     def get_lists
       lists=[]
       cursor=-1
@@ -94,7 +93,7 @@ class Chebytoday
       end while list.next_cursor>0
       lists
     end
-    
+
     def get_members_of(uri)
       members=[]
       cursor=-1
@@ -106,25 +105,25 @@ class Chebytoday
         cursor=list.next_cursor
       end while list.next_cursor>0
  #     end
-      members 
+      members
     end
-    
+
     # def my_members(reload=false)
     #   return @my_members=get_members_of('chebytoday','cheboksary') if reload
     #   @my_members or @my_members=get_members_of('chebytoday','cheboksary')
     # end
-    
+
     # def add_member(user,list_name='cheboksary')
     #   logger.info "    add #{user.screen_name} to list #{list_name}"
     #   wrapper do
     #     client.chebytoday._(list_name).members!({:id=>user.id})
     #     my_members << user if list_name=='cheboksary'
     #   end
-    # end                         #- 
+    # end                         #-
 
     def remove_from_list(user,list_name='cheboksary')
       logger.info "    remove #{user.screen_name} from list #{list_name}"
-#      wrapper do 
+#      wrapper do
       client.chebytoday._(list_name).members!( :id=>user.id, :__method=>:delete)
       #end
     end
@@ -156,7 +155,7 @@ class Chebytoday
     def friends( user )
       cursor=-1
       friends = []
-      begin 
+      begin
         list = client.statuses.friends?({ :screen_name=>user.screen_name, :cursor=>cursor })
         friends = friends + list.users
         cursor = list.next_cursor
@@ -170,7 +169,6 @@ class Chebytoday
       client.direct_messages.new!({:screen_name=>user.screen_name, :text=>message})
       #end
     end
-    
+
   end
-  
 end

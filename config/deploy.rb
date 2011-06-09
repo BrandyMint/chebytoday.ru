@@ -19,7 +19,8 @@ set :shared_paths, {
   'log'    => 'log',
   'system' => 'public/system',
   'pids'   => 'tmp/pids',
-  'bundle' => 'vendor/bundle'
+  'bundle' => 'vendor/bundle',
+  '.bundle' => '.bundle'
   # 'sphinx' => 'db/sphinx'
 }
 

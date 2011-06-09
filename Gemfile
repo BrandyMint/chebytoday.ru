@@ -24,6 +24,8 @@ gem 'typus', '~> 3.0.4' # ,  :git => 'https://github.com/fesplugas/typus.git'
 gem "will_paginate", "~> 3.0.pre2"
 gem 'grackle'
 
+gem 'loop_dance'
+
 gem 'annotate'
 
 gem "russian", :git => "https://github.com/dima4p/russian.git"

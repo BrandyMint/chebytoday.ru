@@ -3,7 +3,7 @@
 set :application, "chebytoday.ru"
 set :domain, "wwwdata@chebytoday.ru"
 set :deploy_to, "/home/wwwdata/chebytoday.ru"
-set :repository, 'ssh://danil@dapi.orionet.ru/home/danil/code/chebytoday/.git/'
+# set :repository, 'ssh://danil@dapi.orionet.ru/home/danil/code/chebytoday/.git/'
 set :repository, 'git://github.com/dapi/chebytoday.ru.git'
 
 set :rails_env, "production"

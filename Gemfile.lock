@@ -20,9 +20,23 @@ GIT
     russian (0.2.8.pre)
 
 PATH
+  remote: /home/danil/code/gems/vlad
+  specs:
+    vlad (2.2.0.20110510)
+      open4 (~> 0.9.0)
+      rake (>= 0.8.0)
+      rake-remote_task (~> 2.0)
+
+PATH
   remote: /home/danil/code/gems/vlad-extras
   specs:
     vlad-extras (0.1.0)
+
+PATH
+  remote: /home/danil/code/gems/vlad-git
+  specs:
+    vlad-git (2.2.0)
+      vlad (>= 2.1.0)
 
 GEM
   remote: http://rubygems.org/
@@ -227,12 +241,6 @@ GEM
       render_inheritable
       will_paginate (~> 3.0.pre2)
     tzinfo (0.3.27)
-    vlad (2.2.0)
-      open4 (~> 0.9.0)
-      rake (~> 0.8.0)
-      rake-remote_task (~> 2.0)
-    vlad-git (2.2.0)
-      vlad (>= 2.1.0)
     warden (1.0.4)
       rack (>= 1.0)
     will_paginate (3.0.pre2)
@@ -271,8 +279,8 @@ DEPENDENCIES
   stateful_link
   truncate_html!
   typus (~> 3.0.4)
-  vlad (~> 2.2.0)
+  vlad!
   vlad-extras!
-  vlad-git
+  vlad-git!
   will_paginate (~> 3.0.pre2)
   wirble

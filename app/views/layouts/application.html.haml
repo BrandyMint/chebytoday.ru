@@ -14,7 +14,7 @@
     = csrf_meta_tag
     = yield(:head)
     = render "common/google_analytics"
-  
+
   %body
     #header
       = render :partial=>"devise/shared/login"
@@ -22,32 +22,28 @@
       %h1#logo
         = link_to('Чебоксары сегодня',root_path)
         &nbsp;
-        = link_to image_tag('rss.png', :alt=>"Общая RSS-лента статей за сутки"), articles_path(:rss), :html_options => { :class => 'rss' } 
+        = link_to image_tag('rss.png', :alt=>"Общая RSS-лента статей за сутки"), articles_path(:rss), :html_options => { :class => 'rss' }
 
       = render :partial=>"common/menu"
       .clear
       #hdesc
         Общая лента блоггеров Чувашии.<br>Обнавляется каждые пол часа, сегодня уже&nbsp;<b>#{today_articles.html_safe}</b>.
-
-        .ad
-          Объявление: 
-          = link_to 'Требуется ruby-программист на фулл-тайм в Чебоксарах', 'https://docs.google.com/document/pub?id=1196rRixBpNSeNDvnPL2UUuBGjuStcxYTfR4M2Z3Bl-Y'
-      = render :partial=>"common/submenu"
+        = render :partial=>"common/submenu"
     #container
 
       = render :partial=>"common/flash", :object=>flash
       - if show_title?
         %h2= yield(:title)
-      
+
       = yield
-  
+
       .clear
-      
+
     #footer
       %p
         %a{:href=>'http://twitter.com/chebytoday/'} @chebytoday
         by
-        %a{:href=>'http://dapi.ru'} danil 
+        %a{:href=>'http://dapi.ru'} danil
         %a{:href=>'http://twitter.com/pismenny/'} @pismenny
       %p
         Powered By Ruby On Rails

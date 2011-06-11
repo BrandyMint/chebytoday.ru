@@ -2,11 +2,24 @@
 #
 # Use the README file as a reference to customize settings.
 
+Purchase:
+  fields:
+    default: image, kind, title, state, end_date
+    form: kind, title, description, link, end_date, image, remote_image_url, state, user
+    options:
+      selectors: kind, state
+      read_only: image
+  order_by:
+  relationships: user
+  filters: created_at, kind, state
+  search: title, description, end_date
+  application: chebytoday
+
 Article:
   fields:
     default: is_mained, published_at, title, author, guid, blog_id, link, summary, description, blog
     form: is_mained, published_at, title, author, guid, blog_id, link, summary, description, blog
-  order_by: 
+  order_by:
   relationships: blog
   filters: created_at
   search: title
@@ -16,7 +29,7 @@ Blog:
   fields:
     default: author, title, link, yandex_rating, friends, rss_link, articles_count, user_id, user
     form: author, title, link, yandex_rating, friends, rss_link, articles_count, user_id, user
-  order_by: 
+  order_by:
   relationships: articles, user
   filters: created_at
   search: title
@@ -26,8 +39,8 @@ Politic:
   fields:
     default: name, title, desc
     form: name, title, desc
-  order_by: 
-  relationships: 
+  order_by:
+  relationships:
   filters: created_at
   search: name, title
   application: chebytoday
@@ -36,12 +49,11 @@ Twit:
   fields:
     default: text, favorited, place, retweeted_status, geo, truncated, source, contributors, coordinated, twit_user_id, in_reply_to_user_id, in_reply_to_status_id, in_reply_to_screen_name, twit_user
     form: text, favorited, place, retweeted_status, geo, truncated, source, contributors, coordinated, twit_user_id, in_reply_to_user_id, in_reply_to_status_id, in_reply_to_screen_name, twit_user
-  order_by: 
+  order_by:
   relationships: base_tags, tag_taggings, taggings, tags, twit_user
   filters: created_at
-  search: 
+  search:
   application: chebytoday
-  
 
 TwitUser:
   fields:
@@ -49,7 +61,7 @@ TwitUser:
     default: screen_name, following, state, is_anounced, location, is_cheboksary, source, cheboksary_source
     form: screen_name, profile_image_url, friends_count, statuses_count, following, is_cheboksary, state, favourites_count, followers_count, listed_count, name, is_anounced, followed_at, location, source, cheboksary_source
     show: screen_name, is_location_cheboksary?, following, is_cheboksary, state, favourites_count, followers_count, listed_count, name, is_anounced, followed_at, location, source, cheboksary_source
-  order_by: 
+  order_by:
   relationships: twits
   filters: following, is_anounced, state, is_cheboksary
   search: name, location, source, cheboksary_source
@@ -70,9 +82,9 @@ Twitter:
   actions:
     edit: go_to_twitter
     show: go_to_twitter
-      
+
   order_by: -created_at
-  relationships: 
+  relationships:
   filters: state, list_state, is_cheboksary
   search: screen_name, name, location, source
   application: chebytoday
@@ -85,9 +97,9 @@ User:
   fields:
     default: email, sign_in_count, current_sign_in_at, last_sign_in_at, current_sign_in_ip, last_sign_in_ip, nick, role, status
     form: email, reset_password_token, sign_in_count, current_sign_in_at, last_sign_in_at, current_sign_in_ip, last_sign_in_ip, nick, role, status
-  order_by: 
+  order_by:
   relationships: articles, blogs
   filters: created_at
-  search: 
+  search:
   application: chebytoday
 

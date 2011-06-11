@@ -55,13 +55,13 @@ a.tool
     font-family: sans
   .desc
     display: none
-      
+
 .gray
   color: #999
 .small
   font-size: 75%
 
-    
+
 #mmenu
   // font-size: 16px
   // letter-spacing: 0.1em
@@ -187,10 +187,13 @@ h2
   // color: #999999
 
 #header
-  width: 900px
+  width: 960px
   margin: 0 auto
   color: black
-  padding: 0px 20px 30px 20px
+  padding: 10px 0px 0px 0px
+  #subheader
+    clear: both
+    padding: 10px 30px 30px 30px
 
 #all
   position: relative
@@ -221,6 +224,13 @@ h1#logo
     padding-top: 10px
     font-size: 16px
 
+#logotars
+  clear: both
+
+.logotar
+  padding: 0
+  margin: 0px
+  float: left
 
 
 #footer
@@ -322,3 +332,33 @@ ul#authors
     line-height: 19px
     img
       max-width: 600px
+
+
+.purchases
+  list-style: none
+  padding: 0
+  margin: 0
+  li.purchase
+    clear: both
+    padding-botttom: 10px
+    .purchase_image
+      width: 74px
+      float: left
+      padding-right: 10px
+      img.purchase_thumb
+        width: 64px
+        height: 64px
+    .purchase_info
+      width: 700px
+      float: left
+    .purchase_title
+      font-size: 120%
+      padding-bottom: 5px
+    .purchase_description
+      font-size: 80%
+      color: gray
+    a
+      text-decoration: none
+      border-bottom: 1px dashed black
+      &:hover
+        border-bottom: 1px dashed red

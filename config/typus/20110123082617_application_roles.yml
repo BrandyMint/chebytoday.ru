@@ -10,3 +10,4 @@ admin:
   TwitUser: create, read, update, delete
   Twitter: create, read, update, delete
   User: create, read, update, delete
+  Purchase: create, read, update, delete

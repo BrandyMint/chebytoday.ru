@@ -1,0 +1,12 @@
+%ul.purchases
+  - @purchases.each do |purchase|
+    %li.purchase
+      .purchase_image
+        = image_tag purchase.image_url, :class=>'purchase_thumb'
+      .purchase_info
+        .purchase_title= link_to purchase.title, purchase.link
+        .purchase_description= truncate purchase.description, :length=>300
+
+%br
+
+-# = link_to 'New Purchase', new_purchase_path

@@ -1,0 +1,27 @@
+%p#notice= notice
+
+%p
+  %b Title:
+  = @purchase.title
+%p
+  %b Image:
+  = @purchase.image
+%p
+  %b End date:
+  = @purchase.end_date
+%p
+  %b User:
+  = @purchase.user_id
+%p
+  %b Description:
+  = @purchase.description
+%p
+  %b Kind:
+  = @purchase.kind
+%p
+  %b State:
+  = @purchase.state
+
+= link_to 'Edit', edit_purchase_path(@purchase)
+\|
+= link_to 'Back', purchases_path

@@ -1,5 +1,7 @@
 Chebytoday::Application.routes.draw do 
 
+  resources :purchases
+
   resources :twitters
 
   resources :articles

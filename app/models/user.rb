@@ -4,19 +4,23 @@ class User < ActiveRecord::Base
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
   :recoverable, :rememberable, :trackable, :validatable
-  
+
   # Setup accessible (or protected) attributes for your model
   attr_accessible :nick, :email, :password, :password_confirmation, :remember_me
 
   validates_uniqueness_of :nick
-  
+
   has_many :blogs
   has_many :articles, :through=>:blog
 
   def is_admin?
     role=='admin'
   end
-  
+
+  def to_label
+    nick
+  end
+
 end
 
 # == Schema Information

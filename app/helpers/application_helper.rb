@@ -15,21 +15,21 @@ module ApplicationHelper
     link_to title, {:sort => column, :direction => direction}, {:class => css_class}
   end
 
-  def navigation_link(label, active, chosen, url)
+  def navigation_link(label, active, chosen, url, title=nil)
     stateful_link_to(
       active,
       chosen,
-      :active => proc { content_tag :li, :class=>'active' do 
+      :active => proc { content_tag :li, :class=>'active' do
           concat content_tag :span, label
         end },
       :chosen => proc { content_tag :li, :class=>'chosen' do
-          link_to( label, url )
+          link_to( label, url, :title=>title )
         end },
       :inactive => proc { content_tag :li do
-          link_to( label, url )
+          link_to( label, url, :title=>title )
         end }
       )
-    
+
   end
 
   def today_articles
@@ -40,6 +40,6 @@ module ApplicationHelper
     @submenu||=[]
     @submenu+=[args]
   end
-  
+
 
 end

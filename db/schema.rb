@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110124095639) do
+ActiveRecord::Schema.define(:version => 20110611062413) do
 
   create_table "articles", :force => true do |t|
     t.boolean  "is_mained",    :default => false, :null => false
@@ -64,6 +64,19 @@ ActiveRecord::Schema.define(:version => 20110124095639) do
     t.string   "name"
     t.string   "title"
     t.text     "desc"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "purchases", :force => true do |t|
+    t.string   "title"
+    t.string   "image"
+    t.string   "link"
+    t.date     "end_date"
+    t.integer  "user_id"
+    t.text     "description"
+    t.string   "kind"
+    t.string   "state"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

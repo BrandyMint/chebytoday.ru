@@ -1,5 +1,6 @@
 #mmenu
   %ul.menu
-    = navigation_link( "Блогосфера", ['blog#index', 'articles#index'] , ["blogs#", "articles#"], articles_url )
+    -# = navigation_link( "Покупки", ['purchases#index'] , ["purchases#"], purchases_url, 'Групповые закупки, купоны и скидки' )
+    = navigation_link( "Блогосфера", ['blog#sindex', 'articles#index'] , ["blogs#", "articles#"], articles_url )
     = navigation_link( "Твиттеряне", 'twitters#index' , ["twitters#"], twitters_url )
     -#= navigation_link( "Полиметр", ["politics#index"], "politics#*", politics_url )

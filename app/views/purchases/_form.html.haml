@@ -1,0 +1,22 @@
+= simple_form_for(@purchase) do |f|
+  - if @purchase.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@purchase.errors.count, "error")
+        prohibited this purchase from being saved:
+
+      %ul
+      - @purchase.errors.full_messages.each do |msg|
+        %li= msg
+
+  .inputs
+    = f.input :title
+    = f.input :image
+    = f.input :end_date
+    = f.input :user_id
+    = f.input :description
+    = f.input :kind
+    = f.input :state
+
+  .actions
+    = f.button :submit

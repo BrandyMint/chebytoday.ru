@@ -1,0 +1,6 @@
+#!/bin/bash
+
+path=`echo $0 | sed -e 's/\/script\/server//'`
+echo "Project path: $path"
+cd $path
+bundle exec unicorn_rails -c ./config/unicorn.rb -E production -D

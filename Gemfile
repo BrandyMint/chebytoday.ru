@@ -32,7 +32,7 @@ gem 'typus', '~> 3.0.10' # ,  :git => 'https://github.com/fesplugas/typus.git'
 gem "will_paginate", "~> 3.0.pre2"
 gem 'grackle'
 
-gem 'loop_dance'
+# gem 'loop_dance'
 
 gem 'annotate'
 
@@ -52,7 +52,7 @@ gem "jquery-rails"
 gem 'img_gravatar'
 
 group :development, :test do
-  # gem 'ruby-debug19'
+  gem 'ruby-debug19'
   gem 'rack-bug'
 
   gem 'guard'
@@ -64,9 +64,11 @@ group :development, :test do
   gem 'guard-compass'
 
 
-  # gem 'vlad', :path => '/home/danil/code/gems/vlad/' #, :git=>'git://github.com/dapi/vlad.git' # '~> 2.2.0',
-  #gem 'vlad-extras', :path => '/home/danil/code/gems/vlad-extras/'
-  #gem 'vlad-git', :path => '/home/danil/code/gems/vlad-git/'
+  # update rake dependency to include 0.9.x
+  gem 'rake-remote_task', :path => '/home/danil/code/gems/rake-remote_task'
+  gem 'vlad', :path => '/home/danil/code/gems/vlad/' #, :git=>'git://github.com/dapi/vlad.git' # '~> 2.2.0',
+  gem 'vlad-extras', :path => '/home/danil/code/gems/vlad-extras/'
+  gem 'vlad-git', :path => '/home/danil/code/gems/vlad-git/'
 
   gem 'hpricot'
   gem 'rcov'

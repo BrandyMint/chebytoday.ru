@@ -13,7 +13,7 @@ set :keep_releases,	3
 set :web_command, "sudo apache2ctl"
 
 set :copy, [ 'config/database.yml', 'config/app_config.yml' ]
-set :symlinks, copy
+set :symlinks, [ 'config/database.yml', 'config/app_config.yml' ]
 
 set :shared_paths, {
   'log'    => 'log',

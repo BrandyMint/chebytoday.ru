@@ -4,8 +4,8 @@
 
 Purchase:
   fields:
-    default: image, kind, title, state, end_date
-    form: kind, title, description, link, end_date, image, remote_image_url, state, user
+    default: image, kind, price, title, state, end_date
+    form: kind, title, price, rebate, description, link, end_date, image, remote_image_url, state, user
     options:
       selectors: kind, state
       read_only: image

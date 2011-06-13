@@ -1,8 +1,10 @@
 %ul#login
   - if user_signed_in?
     %li
+      = img_gravatar( current_user.email, :size => 16 ).html_safe
+    %li
       #{current_user.nick}
-      (#{link_to 'профиль', edit_user_registration_path})
+      (#{link_to 'настройки', edit_user_registration_path})
     %li= link_to 'выйти', destroy_user_session_path
 
   - elsif controller_name != 'sessions'

@@ -5,7 +5,22 @@
         = image_tag purchase.image_url, :class=>'purchase_thumb'
       .purchase_info
         .purchase_title= link_to purchase.title, purchase.link
-        .purchase_description= truncate purchase.description, :length=>300
+        -# .purchase_description
+        -#   = truncate purchase.description, :length=>300
+        .purchase_price
+          = purchase.price.to_money
+          %span.purchase_rebate
+            (экономия:
+            = purchase.price.to_money
+            )
+          %span.purchase_end_date
+            до
+            = distance_of_time_in_words purchase.end_date, Date.today
+      .purchase_sidebar
+        %span.purchase_rate_up &uarr;
+        %span.purchase_rating 0
+        %span.purchase_rate_down &darr;
+
 
 %br
 

@@ -19,25 +19,6 @@ GIT
   specs:
     russian (0.2.8.pre)
 
-PATH
-  remote: /home/danil/code/gems/vlad
-  specs:
-    vlad (2.2.0.20110510)
-      open4 (~> 0.9.0)
-      rake (>= 0.8.0)
-      rake-remote_task (~> 2.0)
-
-PATH
-  remote: /home/danil/code/gems/vlad-extras
-  specs:
-    vlad-extras (0.1.0)
-
-PATH
-  remote: /home/danil/code/gems/vlad-git
-  specs:
-    vlad-git (2.2.0)
-      vlad (>= 2.1.0)
-
 GEM
   remote: http://rubygems.org/
   specs:
@@ -70,6 +51,11 @@ GEM
       activesupport (= 3.0.8)
     activesupport (3.0.8)
     acts-as-taggable-on (2.0.6)
+    acts_as_commentable_with_threading (1.1.1)
+      activerecord (~> 3.0)
+      activesupport (~> 3.0)
+      moretea-awesome_nested_set
+    addressable (2.2.6)
     annotate (2.4.0)
     arel (2.0.10)
     arrayfields (4.7.4)
@@ -88,16 +74,18 @@ GEM
       ruby_parser (~> 2.0.4)
       sexp_processor (~> 3.0.3)
     colored (1.2)
-    columnize (0.3.2)
-    compass (0.11.2)
-      chunky_png (~> 1.1)
+    compass (0.11.3)
+      chunky_png (~> 1.2)
       fssm (>= 0.2.7)
       sass (~> 3.1)
     curb (0.7.15)
     daemon_controller (0.2.6)
+    em-websocket (0.2.1)
+      addressable (>= 2.1.1)
+      eventmachine (>= 0.12.9)
     erubis (2.6.6)
       abstract (>= 1.0.0)
-    exception_notification (2.4.1)
+    eventmachine (0.12.10)
     fastercsv (1.5.4)
     fattr (2.2.0)
     feedzirra (0.0.24)
@@ -107,6 +95,7 @@ GEM
       loofah (>= 0.3.1)
       nokogiri (> 0.0.0)
       sax-machine (>= 0.0.12)
+    ffi (1.0.9)
     flay (1.4.2)
       ruby_parser (~> 2.0)
       sexp_processor (~> 3.0)
@@ -122,6 +111,15 @@ GEM
       json
       mime-types
       oauth
+    guard (0.4.2)
+      thor (~> 0.14.6)
+    guard-compass (0.0.6)
+      compass (>= 0.10.5)
+      guard (>= 0.2.1)
+    guard-livereload (0.1.11)
+      em-websocket (~> 0.2.0)
+      guard (>= 0.2.2)
+      json (~> 1.5.1)
     haml (3.1.2)
     haml-rails (0.3.4)
       actionpack (~> 3.0)
@@ -131,12 +129,14 @@ GEM
     hirb (0.4.5)
     hpricot (0.8.4)
     i18n (0.5.0)
+    img_gravatar (0.2.1)
     jquery-rails (1.0.9)
       railties (~> 3.0)
       thor (~> 0.14)
     json (1.5.1)
     json_pure (1.5.1)
-    linecache (0.43)
+    kgio (2.4.1)
+    libnotify (0.5.5)
     loofah (1.0.0)
       nokogiri (>= 1.3.3)
     loop_dance (0.5.3)
@@ -167,14 +167,15 @@ GEM
     mini_magick (3.3)
       subexec (~> 0.1.0)
     mocha (0.9.12)
+    moretea-awesome_nested_set (1.4.3.1)
+      activerecord (~> 3.0.0)
     nifty-generators (0.4.6)
     nokogiri (1.4.4)
     oauth (0.4.4)
-    open4 (0.9.6)
     orm_adapter (0.0.5)
     pg (0.11.0)
     polyglot (0.3.1)
-    rack (1.2.2)
+    rack (1.2.3)
     rack-bug (0.3.0)
       rack (>= 1.0)
     rack-mount (0.6.14)
@@ -204,10 +205,9 @@ GEM
       activesupport (= 3.0.8)
       rake (>= 0.8.7)
       thor (~> 0.14.4)
-    rake (0.8.7)
-    rake-remote_task (2.0.3)
-      open4 (~> 0.9.0)
-      rake (~> 0.8.0)
+    rake (0.9.2)
+    rb-inotify (0.8.5)
+      ffi (>= 0.5.0)
     rcov (0.9.9)
     reek (1.2.8)
       ruby2ruby (~> 1.2)
@@ -217,11 +217,6 @@ GEM
       rails (~> 3.0)
     roodi (2.1.0)
       ruby_parser
-    ruby-debug (0.10.4)
-      columnize (>= 0.1)
-      ruby-debug-base (~> 0.10.4.0)
-    ruby-debug-base (0.10.4)
-      linecache (>= 0.3)
     ruby-progressbar (0.0.10)
     ruby2ruby (1.2.5)
       ruby_parser (~> 2.0)
@@ -246,6 +241,9 @@ GEM
       render_inheritable
       will_paginate (~> 3.0.pre2)
     tzinfo (0.3.27)
+    unicorn (3.7.0)
+      kgio (~> 2.3)
+      rack
     warden (1.0.4)
       rack (>= 1.0)
     will_paginate (3.0.pre2)
@@ -256,19 +254,24 @@ PLATFORMS
 
 DEPENDENCIES
   acts-as-taggable-on
+  acts_as_commentable_with_threading
   annotate
   bson_ext
   carrierwave
   compass
   devise!
-  exception_notification
   feedzirra
   formtastic (~> 1.1.0)
   grackle
+  guard
+  guard-compass
+  guard-livereload
   haml
   haml-rails
   hpricot
+  img_gravatar
   jquery-rails
+  libnotify
   loop_dance
   mail
   metric_fu
@@ -279,15 +282,14 @@ DEPENDENCIES
   rack-bug
   rails (~> 3.0.7)
   rails3-generators
+  rake (>= 0.9)
+  rb-inotify
   rcov
-  ruby-debug
   russian!
   state_machine
   stateful_link
   truncate_html!
-  typus (~> 3.0)
-  vlad!
-  vlad-extras!
-  vlad-git!
+  typus (~> 3.0.10)
+  unicorn
   will_paginate (~> 3.0.pre2)
   wirble

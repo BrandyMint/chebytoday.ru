@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110611062413) do
+ActiveRecord::Schema.define(:version => 20110613082801) do
 
   create_table "articles", :force => true do |t|
     t.boolean  "is_mained",    :default => false, :null => false
@@ -47,6 +47,23 @@ ActiveRecord::Schema.define(:version => 20110611062413) do
   add_index "blogs", ["friends"], :name => "index_blog_sources_on_friends"
   add_index "blogs", ["yandex_rating"], :name => "index_blog_sources_on_yandex_rating"
 
+  create_table "comments", :force => true do |t|
+    t.integer  "commentable_id",   :default => 0
+    t.string   "commentable_type", :default => ""
+    t.string   "title",            :default => ""
+    t.text     "body",             :default => ""
+    t.string   "subject",          :default => ""
+    t.integer  "user_id",          :default => 0,  :null => false
+    t.integer  "parent_id"
+    t.integer  "lft"
+    t.integer  "rgt"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "comments", ["commentable_id"], :name => "index_comments_on_commentable_id"
+  add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
+
   create_table "histories", :force => true do |t|
     t.string   "message"
     t.string   "username"
@@ -79,6 +96,8 @@ ActiveRecord::Schema.define(:version => 20110611062413) do
     t.string   "state"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "price"
+    t.integer  "rebate"
   end
 
   create_table "taggings", :force => true do |t|

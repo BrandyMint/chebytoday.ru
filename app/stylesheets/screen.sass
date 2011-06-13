@@ -119,8 +119,11 @@ ul#login
   list-style: none
   font-family: "Helvetica"
 
+
   li
     float: left
+    /* vertical-align: middle
+    /* line-height: 16px
     padding-left: 20px
   li.active
     font-weight: bold
@@ -233,9 +236,6 @@ h1#logo
   float: left
 
 
-#footer
-  margin: 40px
-
 #main
   width: 500px
 
@@ -261,10 +261,12 @@ h1#logo
     margin-right: auto
 
 #footer
+  border-top: 1px dotted #eee
+  margin: 120px 40px 40px 40px
   padding-top: 20px
+  padding-bottom: 20px
   color: black
   text-align: center
-  padding-bottom: 20px
   /* a
   /*   color: black
 
@@ -334,6 +336,9 @@ ul#authors
       max-width: 600px
 
 
+@import "compass/css3/border-radius"
+@import "compass/css3/box-shadow"
+
 .purchases
   list-style: none
   padding: 0
@@ -341,21 +346,46 @@ ul#authors
   li.purchase
     clear: both
     padding-botttom: 10px
+    .purchase_sidebar
+      width: 120px
+      float: left
+      font-weight: bold
+      font-size: 48px
+      .purchase_rate_up
+        color: green
+      .purchase_rate_down
+        color: red
+      .purchase_rating
+        color: #aaa
     .purchase_image
-      width: 74px
+      img
+        +border-radius
+      /* +box-shadow
+      width: 90px
       float: left
       padding-right: 10px
       img.purchase_thumb
-        width: 64px
-        height: 64px
+        width: 80px
+        height: 80px
     .purchase_info
-      width: 700px
+      width: 670px
+      padding-right: 10px
       float: left
     .purchase_title
-      font-size: 120%
-      padding-bottom: 5px
+      font-size: 125%
+      padding-bottom: 15px
     .purchase_description
       font-size: 80%
+      color: gray
+    .purchase_price
+      float: left
+      font-size: 150%
+      font-weight: bold
+    .purchase_rebate
+      font-weight: normal
+      color: gray
+    .purchase_end_date
+      font-weight: normal
       color: gray
     a
       text-decoration: none

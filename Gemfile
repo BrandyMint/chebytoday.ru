@@ -65,10 +65,10 @@ group :development, :test do
 
 
   # update rake dependency to include 0.9.x
-  gem 'rake-remote_task', :path => '/home/danil/code/gems/rake-remote_task'
-  gem 'vlad', :path => '/home/danil/code/gems/vlad/' #, :git=>'git://github.com/dapi/vlad.git' # '~> 2.2.0',
-  gem 'vlad-extras', :path => '/home/danil/code/gems/vlad-extras/'
-  gem 'vlad-git', :path => '/home/danil/code/gems/vlad-git/'
+  # gem 'rake-remote_task', :path => '/home/danil/code/gems/rake-remote_task'
+  # gem 'vlad', :path => '/home/danil/code/gems/vlad/' #, :git=>'git://github.com/dapi/vlad.git' # '~> 2.2.0',
+  #gem 'vlad-extras', :path => '/home/danil/code/gems/vlad-extras/'
+  #gem 'vlad-git', :path => '/home/danil/code/gems/vlad-git/'
 
   gem 'hpricot'
   gem 'rcov'

@@ -6,22 +6,6 @@ ru:
       long: "%d %B %Y"
       date: "%Y-%m-%d"
       md: "%m-%d"
-  time:
-    formats:
-      standart: %Y-%m-%d %H:%M
-      # default: %a %d %b %Y, %H:%M
-      default: %d %b %Y, %H:%M
-      full: %a %d %b %Y, %H:%M:%S %z
-      forum_short: %d.%m.%Y
-      forum_today: Сегодня в %H:%M
-      forum_yesterday: Вчера в %H:%M
-      forum_long_ago: %d.%m.%Y в %H:%M
-      time: "%H:%M"
-      short: "%d %b, %H:%M"
-      long: "%d %B %Y, %H:%M"
-      date: "%Y-%m-%d"
-      md: "%m-%d"
-      descr: "%d %b %Y"
   devise:
     omniauth_callbacks:
       success: "Вы авторизованы"

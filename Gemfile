@@ -32,7 +32,7 @@ gem 'typus', '~> 3.0.10' # ,  :git => 'https://github.com/fesplugas/typus.git'
 gem "will_paginate", "~> 3.0.pre2"
 gem 'grackle'
 
-# gem 'loop_dance'
+gem 'loop_dance'
 
 gem 'annotate'
 

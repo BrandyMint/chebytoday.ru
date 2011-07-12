@@ -24,6 +24,18 @@ set :shared_paths, {
   # 'sphinx' => 'db/sphinx'
 }
 
+set :deploy_tasks, %w[
+      vlad:update
+      vlad:symlink_release
+      vlad:symlink
+      vlad:bundle:install
+      vlad:migrate
+      vlad:start_app
+      vlad:cleanup
+    ]
+
+
+# rake vlad:loop_dance:restart
 
 
 # Unicorn

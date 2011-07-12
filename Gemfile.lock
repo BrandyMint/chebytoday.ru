@@ -14,36 +14,36 @@ GIT
       warden (~> 1.0.3)
 
 GIT
-  remote: https://github.com/dima4p/russian.git
-  revision: 0af1e31cbec3a7907c17364453a0a8b0f64a0c4a
+  remote: https://github.com/kelvich/russian.git
+  revision: 6b557b95a0aa38491ee351775d4337aac19b0dab
   specs:
-    russian (0.2.8.pre)
+    russian (0.2.7)
 
 PATH
-  remote: /home/danil/code/gems/rake-remote_task
+  remote: ~/code/gems/rake-remote_task
   specs:
     rake-remote_task (2.0.3)
       open4 (~> 0.9.0)
       rake (>= 0.8.0)
 
 PATH
-  remote: /home/danil/code/gems/vlad
+  remote: ~/code/gems/vlad-extras/
+  specs:
+    vlad-extras (0.1.0)
+
+PATH
+  remote: ~/code/gems/vlad-git/
+  specs:
+    vlad-git (2.2.0)
+      vlad (>= 2.1.0)
+
+PATH
+  remote: ~/code/gems/vlad/
   specs:
     vlad (2.2.0.20110510)
       open4 (~> 0.9.0)
       rake (>= 0.8.0)
       rake-remote_task (~> 2.0)
-
-PATH
-  remote: /home/danil/code/gems/vlad-extras
-  specs:
-    vlad-extras (0.1.0)
-
-PATH
-  remote: /home/danil/code/gems/vlad-git
-  specs:
-    vlad-git (2.2.0)
-      vlad (>= 2.1.0)
 
 GEM
   remote: http://rubygems.org/
@@ -81,7 +81,6 @@ GEM
       activerecord (~> 3.0)
       activesupport (~> 3.0)
       moretea-awesome_nested_set
-    addressable (2.2.6)
     annotate (2.4.0)
     archive-tar-minitar (0.5.2)
     arel (2.0.10)
@@ -107,12 +106,8 @@ GEM
       fssm (>= 0.2.7)
       sass (~> 3.1)
     curb (0.7.15)
-    em-websocket (0.2.1)
-      addressable (>= 2.1.1)
-      eventmachine (>= 0.12.9)
     erubis (2.6.6)
       abstract (>= 1.0.0)
-    eventmachine (0.12.10)
     fastercsv (1.5.4)
     fattr (2.2.0)
     feedzirra (0.0.24)
@@ -122,7 +117,6 @@ GEM
       loofah (>= 0.3.1)
       nokogiri (> 0.0.0)
       sax-machine (>= 0.0.12)
-    ffi (1.0.9)
     flay (1.4.2)
       ruby_parser (~> 2.0)
       sexp_processor (~> 3.0)
@@ -138,15 +132,6 @@ GEM
       json
       mime-types
       oauth
-    guard (0.4.2)
-      thor (~> 0.14.6)
-    guard-compass (0.0.6)
-      compass (>= 0.10.5)
-      guard (>= 0.2.1)
-    guard-livereload (0.1.11)
-      em-websocket (~> 0.2.0)
-      guard (>= 0.2.2)
-      json (~> 1.5.1)
     haml (3.1.2)
     haml-rails (0.3.4)
       actionpack (~> 3.0)
@@ -163,7 +148,6 @@ GEM
     json (1.5.1)
     json_pure (1.5.1)
     kgio (2.4.1)
-    libnotify (0.5.5)
     linecache19 (0.5.12)
       ruby_core_source (>= 0.1.4)
     loofah (1.0.0)
@@ -232,8 +216,6 @@ GEM
       rake (>= 0.8.7)
       thor (~> 0.14.4)
     rake (0.9.2)
-    rb-inotify (0.8.5)
-      ffi (>= 0.5.0)
     rcov (0.9.9)
     reek (1.2.8)
       ruby2ruby (~> 1.2)
@@ -280,6 +262,8 @@ GEM
     unicorn (3.7.0)
       kgio (~> 2.3)
       rack
+    vlad-unicorn (2.0.0)
+      vlad (~> 2.0)
     warden (1.0.4)
       rack (>= 1.0)
     will_paginate (3.0.pre2)
@@ -299,15 +283,11 @@ DEPENDENCIES
   feedzirra
   formtastic (~> 1.1.0)
   grackle
-  guard
-  guard-compass
-  guard-livereload
   haml
   haml-rails
   hpricot
   img_gravatar
   jquery-rails
-  libnotify
   mail
   metric_fu
   mini_magick
@@ -319,7 +299,6 @@ DEPENDENCIES
   rails3-generators
   rake (>= 0.9)
   rake-remote_task!
-  rb-inotify
   rcov
   ruby-debug19
   russian!
@@ -331,5 +310,6 @@ DEPENDENCIES
   vlad!
   vlad-extras!
   vlad-git!
+  vlad-unicorn
   will_paginate (~> 3.0.pre2)
   wirble

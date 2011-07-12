@@ -36,7 +36,8 @@ gem 'grackle'
 
 gem 'annotate'
 
-gem "russian", :git => "https://github.com/dima4p/russian.git"
+# gem "russian", :git => "https://github.com/dima4p/russian.git"
+gem "russian", :git => "https://github.com/kelvich/russian.git"
 
 # Стили комментариев http://www.mcdowall.info/john/blog/2011/06/why-rails-3-1-streaming-means-you-still-have-to-think-about-your-head/
 gem 'acts_as_commentable_with_threading'
@@ -51,24 +52,26 @@ gem "jquery-rails"
 
 gem 'img_gravatar'
 
+#gem 'human_dates', :path => '~/code/gems/human_dates'
+
 group :development, :test do
   gem 'ruby-debug19'
   gem 'rack-bug'
 
-  gem 'guard'
-  gem 'rb-fsevent', :require => false if RUBY_PLATFORM =~ /darwin/i
-  gem 'libnotify'
-  gem 'rb-inotify'
+  #gem 'guard'
+  #gem 'rb-fsevent', :require => false if RUBY_PLATFORM =~ /darwin/i
+  #gem 'libnotify'
+  #gem 'rb-inotify'
   # gem 'guard-rspec'
-  gem 'guard-livereload'
-  gem 'guard-compass'
-
+  #gem 'guard-livereload'
+  #gem 'guard-compass'
 
   # update rake dependency to include 0.9.x
-  gem 'rake-remote_task', :path => '/home/danil/code/gems/rake-remote_task'
-  gem 'vlad', :path => '/home/danil/code/gems/vlad/' #, :git=>'git://github.com/dapi/vlad.git' # '~> 2.2.0',
-  gem 'vlad-extras', :path => '/home/danil/code/gems/vlad-extras/'
-  gem 'vlad-git', :path => '/home/danil/code/gems/vlad-git/'
+  gem 'rake-remote_task', :path => '~/code/gems/rake-remote_task'
+  gem 'vlad', :path => '~/code/gems/vlad/' #, :git=>'git://github.com/dapi/vlad.git' # '~> 2.2.0',
+  gem 'vlad-extras', :path => '~/code/gems/vlad-extras/'
+  gem 'vlad-git', :path => '~/code/gems/vlad-git/'
+  gem 'vlad-unicorn'
 
   gem 'hpricot'
   gem 'rcov'

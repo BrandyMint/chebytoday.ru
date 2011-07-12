@@ -10,12 +10,21 @@
         .purchase_price
           = purchase.price.to_money
           %span.purchase_rebate
-            (экономия:
-            = purchase.price.to_money
-            )
+            - if purchase.kind == 'rebate'
+              (скидка
+              = purchase.rebate_in_percents
+              \%,
+              экономия
+              = purchase.rebate.to_money
+              )
+            - else
+              ( экономия
+              = purchase.rebate.to_money
+              )
           %span.purchase_end_date
             до
-            = distance_of_time_in_words purchase.end_date, Date.today
+            -# = distance_of_time_in_words purchase.end_date, Date.today
+            = purchase.end_date.to_s
       .purchase_sidebar
         %span.purchase_rate_up &uarr;
         %span.purchase_rating 0

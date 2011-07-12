@@ -12,7 +12,7 @@ set :keep_releases,	3
 
 set :web_command, "sudo apache2ctl"
 
-set :copy, [ 'config/database.yml', 'config/app_config.yml' ]
+set :copy_files, [ 'config/database.yml', 'config/app_config.yml' ]
 set :symlinks, [ 'config/database.yml', 'config/app_config.yml' ]
 
 set :shared_paths, {
@@ -24,3 +24,8 @@ set :shared_paths, {
   # 'sphinx' => 'db/sphinx'
 }
 
+
+
+# Unicorn
+
+set :unicorn_env, rails_env

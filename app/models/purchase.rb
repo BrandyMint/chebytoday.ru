@@ -13,7 +13,12 @@ class Purchase < ActiveRecord::Base
 
   KIND = %w( rebate group )
   state_machine :initial => :rebate do
-    state :rebate, :closed
+    state :rebate, :group
+  end
+
+
+  def rebate_in_percents
+    rebate*100/(price + rebate)
   end
 
 end

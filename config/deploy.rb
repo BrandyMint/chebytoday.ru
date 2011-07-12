@@ -29,3 +29,6 @@ set :shared_paths, {
 # Unicorn
 
 set :unicorn_env, rails_env
+set :unicorn_command, "cd #{current_path}; bundle exec unicorn_rails"
+
+

@@ -56,7 +56,6 @@ gem 'img_gravatar'
 
 group :development, :test do
   gem 'ruby-debug19'
-  gem 'rack-bug'
 
   #gem 'guard'
   #gem 'rb-fsevent', :require => false if RUBY_PLATFORM =~ /darwin/i
@@ -67,23 +66,6 @@ group :development, :test do
   #gem 'guard-compass'
   #
 
-  gem 'vlad', '2.2.3', :git=>'git://github.com/MVPSS/vlad.git', :branch=>:gemspec
-  gem 'vlad-extras', :git=>'git://github.com/dbloete/vlad-extras.git'
-  gem 'vlad-git', :git=>'git://github.com/dapi/vlad-git.git' #, :path => '~/code/gems/vlad-git/'
-  gem 'vlad-unicorn', :git=>'git@github.com:dapi/vlad-unicorn.git'
-
-  # update rake dependency to include 0.9.x
-  # gem 'rake-remote_task', :path => '~/code/gems/rake-remote_task'
-  # gem 'vlad', :path => '~/code/gems/vlad/' #, :git=>'git://github.com/dapi/vlad.git' # '~> 2.2.0',
-  # gem 'vlad-extras', :path => '~/code/gems/vlad-extras/'
-  # gem 'vlad-git', :path => '~/code/gems/vlad-git/'
-  # gem 'vlad-unicorn'
-
-  gem 'hpricot'
-  gem 'rcov'
-  gem "rails3-generators"
-  gem "nifty-generators"
-  gem "metric_fu"
   gem 'wirble', :require => 'wirble'
   gem "mocha", :group => :test
   #gem 'limerick_rake', :git => "http://github.com/dapi/limerick_rake.git", :branch => "rails3"

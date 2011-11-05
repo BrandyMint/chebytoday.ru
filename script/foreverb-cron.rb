@@ -35,11 +35,9 @@ Forever.run do
     Blog.update_blogs
   end
 
-
   every 24.hours do 
     Blog.update_yandex_rating
   end
-
 
   every 1.hours do
     wrapper do
@@ -78,8 +76,7 @@ Forever.run do
 
   on_error do |e|
     puts "Boom raised: #{e.message}"
-    # TOFIX Переделать на Airbrake
-    HoptoadNotifier.notify(e)
+    Airbrake.notify(e)
   end
 
   on_ready do

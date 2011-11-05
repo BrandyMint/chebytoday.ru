@@ -22,7 +22,7 @@ gem 'unicorn'
 
 gem 'stateful_link'
 
-#gem "hoptoad"
+gem "airbrake"
 gem 'mail'
 
 gem "devise", :git => "git://github.com/plataformatec/devise.git"
@@ -32,7 +32,7 @@ gem 'typus', '~> 3.0.10' # ,  :git => 'https://github.com/fesplugas/typus.git'
 gem "will_paginate", "~> 3.0.pre2"
 gem 'grackle'
 
-gem 'loop_dance'
+gem 'foreverb'
 
 gem 'annotate'
 
@@ -65,13 +65,19 @@ group :development, :test do
   # gem 'guard-rspec'
   #gem 'guard-livereload'
   #gem 'guard-compass'
+  #
+
+  gem 'vlad', '2.2.3', :git=>'git://github.com/MVPSS/vlad.git', :branch=>:gemspec
+  gem 'vlad-extras', :git=>'git://github.com/dbloete/vlad-extras.git'
+  gem 'vlad-git', :git=>'git://github.com/dapi/vlad-git.git' #, :path => '~/code/gems/vlad-git/'
+  gem 'vlad-unicorn', :git=>'git@github.com:dapi/vlad-unicorn.git'
 
   # update rake dependency to include 0.9.x
-  gem 'rake-remote_task', :path => '~/code/gems/rake-remote_task'
-  gem 'vlad', :path => '~/code/gems/vlad/' #, :git=>'git://github.com/dapi/vlad.git' # '~> 2.2.0',
-  gem 'vlad-extras', :path => '~/code/gems/vlad-extras/'
-  gem 'vlad-git', :path => '~/code/gems/vlad-git/'
-  gem 'vlad-unicorn'
+  # gem 'rake-remote_task', :path => '~/code/gems/rake-remote_task'
+  # gem 'vlad', :path => '~/code/gems/vlad/' #, :git=>'git://github.com/dapi/vlad.git' # '~> 2.2.0',
+  # gem 'vlad-extras', :path => '~/code/gems/vlad-extras/'
+  # gem 'vlad-git', :path => '~/code/gems/vlad-git/'
+  # gem 'vlad-unicorn'
 
   gem 'hpricot'
   gem 'rcov'

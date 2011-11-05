@@ -48,7 +48,7 @@ namespace :vlad do
   desc 'Restart foreverb'
   remote_task :foreverb do
     puts "Foreverb.."
-    run "cd #{current_path}; RAILS_ENV=#{rails_env} ./script/foreverb-cron.rb"
+    run "cd #{current_path}; RAILS_ENV=#{rails_env} bundle exec ./script/foreverb-cron.rb"
   end
 end
 

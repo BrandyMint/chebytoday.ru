@@ -16,6 +16,8 @@ set :web_command, "sudo apache2ctl"
 set :copy_files, [ 'config/database.yml', 'config/app_config.yml' ]
 set :symlinks, [ 'config/database.yml', 'config/app_config.yml' ]
 
+set :rake_cmd, 'bundle exec rake'
+
 set :shared_paths, {
   'log'    => 'log',
   'system' => 'public/system',

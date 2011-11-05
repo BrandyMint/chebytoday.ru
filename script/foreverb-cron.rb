@@ -40,38 +40,26 @@ Forever.run do
   end
 
   every 1.hours do
-    wrapper do
       Twitter.update_stats
       Twitter.anounce
-    end
   end
 
   every 3.hours do
-    wrapper do
       Twitter.search_near
-    end
   end
   
   every 6.hours do
-    wrapper do 
       Twitter.anounce
-    end
   end
   
   every 12.hours do
-    wrapper do
       Twitter.import_from_lists
-    end
   end
 
   every 24.hours do
-    wrapper do
       Twitter.unfollow_foreigns
       Twitter.clean_uncheboksared
-    end
-    wrapper do
       Twitter.export_friends
-    end
   end
 
   on_error do |e|

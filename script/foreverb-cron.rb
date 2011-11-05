@@ -22,7 +22,7 @@ Forever.run do
     deploy_dir = '/home/wwwdata/chebytoday.ru'
     puts "Foreverb deploy directory: #{deploy_dir}"
     dir "#{deploy_dir}/current/"
-    file "#{deploy_dir}/current/script/foreverb-cron"
+    file "#{deploy_dir}/current/script/foreverb-cron.rb"
     log  "#{deploy_dir}/shared/log/forever.log"
     pid "#{deploy_dir}/shared/pids/foreverb.pid"
   else
@@ -30,14 +30,6 @@ Forever.run do
   end
 
   puts "Foreverb directory: #{dir}"
-
-  every 30.minutes do 
-    Blog.update_blogs
-  end
-
-  every 24.hours do 
-    Blog.update_yandex_rating
-  end
 
   every 1.hours do
     wrapper do

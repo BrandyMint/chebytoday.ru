@@ -26,9 +26,8 @@ if rails_env=='production'
   worker_processes 4
 
   APP_PATH = '/home/wwwdata/chebytoday.ru/'
-  listen APP_PATH + "shared/tmp/unicorn.sock", :backlog => 64
-  # listen "/tmp/.sock", :backlog => 64
-  # listen '/data/github/current/tmp/sockets/unicorn.sock', :backlog => 2048
+  listen 4005, :tcp_nopush => true
+  #listen APP_PATH + "shared/tmp/unicorn.sock", :backlog => 64
 
   working_directory APP_PATH + "current"
   pid APP_PATH + "shared/pids/unicorn.pid"

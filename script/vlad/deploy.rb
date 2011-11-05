@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+  def skip_scm; false; end
 set :application, "chebytoday.ru"
 set :domain, "wwwdata@chebytoday.ru"
 set :deploy_to, "/home/wwwdata/chebytoday.ru"
@@ -26,11 +27,11 @@ set :shared_paths, {
 
 set :deploy_tasks, %w[
       vlad:update
-      vlad:symlink_release
       vlad:symlink
       vlad:bundle:install
       vlad:migrate
       vlad:start_app
+      vlad:foreverb
       vlad:cleanup
     ]
 
@@ -43,4 +44,11 @@ set :deploy_tasks, %w[
 set :unicorn_env, rails_env
 set :unicorn_command, "cd #{current_path}; bundle exec unicorn_rails"
 
+namespace :vlad do
+  desc 'Restart foreverb'
+  remote_task :foreverb do
+    puts "Foreverb.."
+    run "cd #{current_path}; RAILS_ENV=#{rails_env} nohup bundle exec ./script/foreverb-cron >> ./tmp/forever-restart.log"
+  end
+end
 

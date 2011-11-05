@@ -12,7 +12,7 @@ gem "haml"
 gem "compass"
 
 gem "formtastic", "~> 1.1.0" #, :git => "http://github.com/justinfrench/formtastic.git", :branch => "rails3"
-gem "truncate_html", :git =>'git://github.com/dapi/truncate_html.git'
+gem "truncate_html" #, :git =>'git://github.com/dapi/truncate_html.git'
 gem "feedzirra"
 
 gem 'bson_ext'                # Не помню для чего это

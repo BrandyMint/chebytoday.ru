@@ -44,7 +44,7 @@ set :deploy_tasks, %w[
 # Unicorn
 
 set :unicorn_env, rails_env
-set :unicorn_command, "cd #{current_path}; bundle exec unicorn_rails"
+set :unicorn_command, "cd #{current_path}; bundle exec unicorn"
 
 namespace :vlad do
   desc 'Restart foreverb'

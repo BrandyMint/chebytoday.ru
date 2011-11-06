@@ -46,6 +46,7 @@ class Blog < ActiveRecord::Base
   
   def add_articles(entries)
     entries.each do |entry|
+      date = Date.today if date.blank?
       date = entry.published.is_a?(Date) || entry.published.is_a?(Time) ? entry.published : Date.parse(entry.published)
       if date < (Date.today - 30)
         print '.'

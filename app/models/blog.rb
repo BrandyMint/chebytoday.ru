@@ -15,6 +15,7 @@ class Blog < ActiveRecord::Base
     all.each do |b|
       b.update_feed
     end
+    puts 'blogs updated'
   end
 
   def self.update_yandex_rating
@@ -70,7 +71,7 @@ class Blog < ActiveRecord::Base
       end
       end
     end
-    puts ""
+    puts "articles added"
   end
 
 end

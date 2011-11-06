@@ -46,8 +46,7 @@ class Blog < ActiveRecord::Base
   
   def add_articles(entries)
     entries.each do |entry|
-      entry.published ||= Date.today
-      p = entry.published
+      p = entry.published || Date.today
       puts "Article [#{entry.id}] published: #{p}"
       date = p.is_a?(Date) || p.is_a?(Time) ? p : Date.parse(p.to_s)
       if date < (Date.today - 30)
@@ -62,7 +61,7 @@ class Blog < ActiveRecord::Base
                          :title        => entry.title || 'no subject',
                          :summary      => entry.summary || '...',
                          :link         => entry.url,
-                         :published_at => entry.published,
+                         :published_at => date,
                          :guid         => entry.id,
                          :author       => author
                          )

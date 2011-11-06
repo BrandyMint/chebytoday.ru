@@ -10,6 +10,6 @@ Bundler.require(:default)
 
 Vlad.load(:app=>'unicorn', :scm => "git", :config => config)
 
-# require 'vlad/airbrake'
+require 'vlad/airbrake'
 require 'vlad/rvm'
 require 'bundler/vlad'

@@ -32,7 +32,9 @@ set :deploy_tasks, %w[
       vlad:symlink
       vlad:bundle:install
       vlad:migrate
+      vlad:stop_app
       vlad:start_app
+      vlad:my_airbrake
       vlad:foreverb
       vlad:cleanup
     ]
@@ -51,6 +53,11 @@ namespace :vlad do
   remote_task :foreverb do
     puts "Foreverb.."
     run "cd #{current_path}; RAILS_ENV=#{rails_env} bundle exec ./script/foreverb-cron.rb"
+  end
+
+  remote_task :my_airbrake do
+    puts 'Airbrake..'
+    run  "cd #{current_release}; nohup bundle exec rake airbrake:deploy RAILS_ENV=#{rails_env} TO=#{rails_env} REVISION=#{revision} USER=`whoami` REPO=#{repository} >> ./tmp/airbrake_notify.log &"
   end
 end
 

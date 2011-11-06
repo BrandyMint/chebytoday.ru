@@ -40,26 +40,26 @@ Forever.run do
   end
 
   every 1.hours do
-      Twitter.update_stats
-      Twitter.anounce
+    Twitter.update_stats
+    Twitter.anounce
   end
 
   every 3.hours do
-      Twitter.search_near
+    Twitter.search_near
   end
   
   every 6.hours do
-      Twitter.anounce
+    Twitter.anounce
   end
   
   every 12.hours do
-      Twitter.import_from_lists
+    Twitter.import_from_lists
   end
 
   every 24.hours do
-      Twitter.unfollow_foreigns
-      Twitter.clean_uncheboksared
-      Twitter.export_friends
+    Twitter.unfollow_foreigns
+    Twitter.clean_uncheboksared
+    Twitter.export_friends
   end
 
   on_error do |e|

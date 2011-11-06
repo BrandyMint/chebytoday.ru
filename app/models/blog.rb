@@ -46,6 +46,7 @@ class Blog < ActiveRecord::Base
   
   def add_articles(entries)
     entries.each do |entry|
+      Airbrake.wrapper do 
       p = entry.published || Date.today
       puts "Article [#{entry.id}] published: #{p}"
       date = p.is_a?(Date) || p.is_a?(Time) ? p : Date.parse(p.to_s)
@@ -66,6 +67,7 @@ class Blog < ActiveRecord::Base
                          :author       => author
                          )
         update_attribute(:articles_updated_at, entry.published) if articles_updated_at.nil? || entry.published>articles_updated_at
+      end
       end
     end
     puts ""

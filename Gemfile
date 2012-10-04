@@ -19,6 +19,7 @@ gem 'bson_ext'                # Не помню для чего это
 
 gem 'unicorn'
 
+gem 'rvm'
 
 gem 'stateful_link'
 
@@ -55,7 +56,11 @@ gem 'img_gravatar'
 #gem 'human_dates', :path => '~/code/gems/human_dates'
 
 group :development, :test do
-  gem 'ruby-debug19'
+  gem 'capistrano'
+  gem 'capistrano-recipes0', :git => 'git://github.com/BrandyMint/capistrano-recipes0.git'
+  gem 'rvm-capistrano'
+
+  #gem 'ruby-debug19'
 
   #gem 'guard'
   #gem 'rb-fsevent', :require => false if RUBY_PLATFORM =~ /darwin/i

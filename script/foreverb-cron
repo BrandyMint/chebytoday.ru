@@ -18,8 +18,8 @@ Forever.run do
   filename=File.expand_path('../../', __FILE__)
   puts "File: #{file}"
 
-  if file=~/wwwdata/
-    deploy_dir = '/home/wwwdata/chebytoday.ru'
+  if file=~/wwwchebytoday/
+    deploy_dir = '/home/wwwchebytoday/chebytoday.ru'
     puts "Foreverb deploy directory: #{deploy_dir}"
     dir "#{deploy_dir}/current/"
     file "#{deploy_dir}/current/script/foreverb-cron.rb"

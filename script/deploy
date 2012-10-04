@@ -1,1 +1,2 @@
-rake -N -f ./script/vlad/Rakefile vlad:deploy
+#!/bin/sh
+bundle exec cap production deploy

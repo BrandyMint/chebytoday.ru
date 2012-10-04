@@ -1,55 +1,66 @@
-
-# Spec's
-#   http://sirupsen.com/setting-up-unicorn-with-nginx/
-#   http://sleekd.com/general/configuring-nginx-and-unicorn/
-#   https://gist.github.com/206253
-#   https://gist.github.com/410309
-
-# nginx example:
-#   https://github.com/defunkt/unicorn/blob/master/examples/nginx.conf
-#   http://unicorn.bogomips.org/examples/nginx.conf
-
-
 # Run: cd /project/; bundle exec unicorn_rails -c config/unicorn.rb -E production -D
 
-rails_env = ENV['RAILS_ENV'] || 'production'
+load File.expand_path('setup_load_paths.rb', File.dirname(__FILE__))
 
+ENV['BUNDLE_GEMFILE'] = File.expand_path('../Gemfile', File.dirname(__FILE__))
+require 'bundler/setup'
 
-# http://unicorn.bogomips.org/examples/unicorn.conf.minimal.rb
-# See http://unicorn.bogomips.org/Unicorn/Configurator.html for complete
-# documentation.
-
-# Use at least one worker per core if you're on a dedicated server,
-# more will usually help for _short_ waits on databases/caches.
+rails_env = ENV['RACK_ENV'] || 'production'
+puts "Unicorn env: #{rails_env}"
 
 if rails_env=='production'
-  worker_processes 4
-
-  APP_PATH = '/home/wwwdata/chebytoday.ru/'
-  #listen 4005, :tcp_nopush => true
-  listen APP_PATH + "shared/tmp/unicorn.sock", :backlog => 64
-
+  worker_processes 10
+  #TODO: избавиться от прописывания пользователя в нескольких местах
+  APP_PATH = ENV['APP_PATH'] || '/home/wwwchebytoday/chebytoday.ru/'
   working_directory APP_PATH + "current"
+
+  listen APP_PATH + "shared/pids/unicorn.sock"
+  pid APP_PATH + "shared/pids/unicorn.pid"
+  stderr_path APP_PATH + "shared/log/unicorn.stderr.log"
+  stdout_path APP_PATH + "shared/log/unicorn.stdout.log"
+elsif rails_env=='stage'
+  worker_processes 3
+  APP_PATH = ENV['APP_PATH'] || '/home/wwwchebytoday/stage.chebytoday.ru/'
+  working_directory APP_PATH + "current"
+
+  listen APP_PATH + "shared/pids/unicorn.sock"
   pid APP_PATH + "shared/pids/unicorn.pid"
   stderr_path APP_PATH + "shared/log/unicorn.stderr.log"
   stdout_path APP_PATH + "shared/log/unicorn.stdout.log"
 else
-  listen 8080, :tcp_nopush => true
+  APP_PATH = ENV['APP_PATH'] || '/home/wwwchebytoday/stage.chebytoday.ru/'
+  stderr_path "log/unicorn.stderr.log"
+  stdout_path "log/unicorn.stdout.log"
+  pid "tmp/unicorn.pid"
+
+  listen 4000, :tcp_nopush => true
 end
 
 # nuke workers after 30 seconds instead of 60 seconds (the default)
-timeout 30
+timeout 60
 
 # combine REE with "preload_app true" for memory savings
 # http://rubyenterpriseedition.com/faq.html#adapt_apps_for_cow
 preload_app true
 GC.respond_to?(:copy_on_write_friendly=) and GC.copy_on_write_friendly = true
 
+# Собираем статистику по сбору мусора на new_relic
+GC::Profiler.enable
+
 before_fork do |server, worker|
   # the following is highly recomended for Rails + "preload_app true"
   # as there's no need for the master process to hold a connection
   defined?(ActiveRecord::Base) and
     ActiveRecord::Base.connection.disconnect!
+
+  old_pid = Rails.root + '/tmp/pids/unicorn.pid.oldbin'
+  if File.exists?(old_pid) && server.pid != old_pid
+    begin
+      Process.kill("QUIT", File.read(old_pid).to_i)
+    rescue Errno::ENOENT, Errno::ESRCH
+      puts "Old master alerady dead"
+    end
+  end
 
   # The following is only recommended for memory/DB-constrained
   # installations.  It is not needed if your system can house
@@ -85,9 +96,35 @@ after_fork do |server, worker|
   defined?(ActiveRecord::Base) and
     ActiveRecord::Base.establish_connection
 
+  child_pid = server.config[:pid].sub('.pid', ".#{worker.nr}.pid")
+  system("echo #{Process.pid} > #{child_pid}")
+
   # if preload_app is true, then you may also want to check and
   # restart any other shared sockets/descriptors such as Memcached,
   # and Redis.  TokyoCabinet file handles are safe to reuse
   # between any number of forked children (assuming your kernel
   # correctly implements pread()/pwrite() system calls)
 end
+
+
+
+# http://unicorn.bogomips.org/examples/unicorn.conf.minimal.rb
+# See http://unicorn.bogomips.org/Unicorn/Configurator.html for complete
+# Spec's
+#   http://sirupsen.com/setting-up-unicorn-with-nginx/
+#   http://sleekd.com/general/configuring-nginx-and-unicorn/
+#   https://gist.github.com/206253
+#   https://gist.github.com/410309
+
+# nginx example:
+#   https://github.com/defunkt/unicorn/blob/master/examples/nginx.conf
+#   http://unicorn.bogomips.org/examples/nginx.conf
+
+
+# Examples:
+#
+# http://ariejan.net/2011/09/14/lighting-fast-zero-downtime-deployments-with-git-capistrano-nginx-and-unicorn
+#
+# upgrade + monit + rc.d:
+# http://shapeshed.com/journal/managing-unicorn-workers-with-monit/ 
+# https://gist.github.com/1221753

@@ -7,7 +7,7 @@
     = f.input :email
     = f.input :password, :label=>'Пароль'
     = f.input :password_confirmation, :label=>'Подтвердите пароль'
-  = f.buttons do
-    = f.commit_button :label=>'Зарегистрироваться'
+  = f.actions do
+    = f.action :submit, :as => :button, :label=>'Зарегистрироваться'
 
 = render :partial => "devise/shared/links"

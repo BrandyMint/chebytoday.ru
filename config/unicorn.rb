@@ -9,7 +9,7 @@ rails_env = ENV['RACK_ENV'] || 'production'
 puts "Unicorn env: #{rails_env}"
 
 if rails_env=='production'
-  worker_processes 10
+  worker_processes 3
   #TODO: избавиться от прописывания пользователя в нескольких местах
   APP_PATH = ENV['APP_PATH'] || '/home/wwwchebytoday/chebytoday.ru/'
   working_directory APP_PATH + "current"
@@ -19,7 +19,7 @@ if rails_env=='production'
   stderr_path APP_PATH + "shared/log/unicorn.stderr.log"
   stdout_path APP_PATH + "shared/log/unicorn.stdout.log"
 elsif rails_env=='stage'
-  worker_processes 3
+  worker_processes 1
   APP_PATH = ENV['APP_PATH'] || '/home/wwwchebytoday/stage.chebytoday.ru/'
   working_directory APP_PATH + "current"
 

@@ -6,6 +6,6 @@
     = f.input :email
     = f.input :password, :label=>'Пароль'
     = f.input :remember_me, :as => :boolean, :checked=>true, :label=>'Запомнить'
-  = f.buttons do
-    = f.commit_button :label=>'Войти'
+  = f.actions do
+    = f.action :submit, :as => :button, :label=>'Войти'
 = render :partial => "devise/shared/links"

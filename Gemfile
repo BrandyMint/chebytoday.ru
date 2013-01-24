@@ -2,8 +2,8 @@
 source 'http://rubygems.org'
 
 #gem 'rails', :git => "git://github.com/rails/rails.git", :branch => "3-0-stable"
-gem 'rake', '>=0.9'
-gem 'rails', '~> 3.0.7'
+gem 'rake'
+gem 'rails', '~> 3.2.11'
 
 gem 'pg'
 gem 'state_machine'
@@ -11,7 +11,7 @@ gem 'acts-as-taggable-on'
 gem "haml"
 gem "compass"
 
-gem "formtastic", "~> 1.1.0" #, :git => "http://github.com/justinfrench/formtastic.git", :branch => "rails3"
+gem "formtastic" #, :git => "http://github.com/justinfrench/formtastic.git", :branch => "rails3"
 gem "truncate_html" #, :git =>'git://github.com/dapi/truncate_html.git'
 gem "feedzirra"
 
@@ -28,7 +28,7 @@ gem 'mail'
 
 gem "devise", :git => "git://github.com/plataformatec/devise.git"
 
-gem 'typus', '~> 3.0.10' # ,  :git => 'https://github.com/fesplugas/typus.git'
+gem 'typus' #, :git => 'https://github.com/fesplugas/typus.git'
 
 gem "will_paginate", "~> 3.0.pre2"
 gem 'grackle'

@@ -27,17 +27,15 @@ set :use_sudo,   false
 set :keep_releases, 3
 set :shared_children, fetch(:shared_children) + %w(public/uploads)
 
-set :rvm_ruby_string, ENV['GEM_HOME'].gsub(/.*\//,"") # Read from local system
-set :rvm_type, :user
+set :rbenv_ruby_version, "1.9.3-p392"
+set :bundle_flags, "--deployment --quiet --binstubs"
 
-before 'deploy:setup', 'rvm:install_rvm'
-before 'deploy:setup', 'rvm:install_ruby'
 before 'deploy:restart', 'deploy:migrate'
 after 'deploy:restart', "deploy:cleanup"
 after 'deploy:finalize_update', 'chebytoday:symlink_configs'
 
 #RVM, Bundler
-require "rvm/capistrano"
+require "capistrano-rbenv"
 require "bundler/capistrano"
 require "recipes0/database_yml"
 #require "recipes0/assets"

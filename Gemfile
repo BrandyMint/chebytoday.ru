@@ -19,8 +19,6 @@ gem 'bson_ext'                # Не помню для чего это
 
 gem 'unicorn'
 
-gem 'rvm'
-
 gem 'stateful_link'
 
 gem "airbrake"
@@ -58,7 +56,8 @@ gem 'img_gravatar'
 group :development, :test do
   gem 'capistrano'
   gem 'capistrano-recipes0', :git => 'git://github.com/BrandyMint/capistrano-recipes0.git'
-  gem 'rvm-capistrano'
+  gem 'capistrano-rbenv'
+  gem 'holepicker', :require => false
 
   #gem 'ruby-debug19'
 

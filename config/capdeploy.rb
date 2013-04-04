@@ -35,14 +35,13 @@ after 'deploy:restart', "deploy:cleanup"
 after 'deploy:finalize_update', 'chebytoday:symlink_configs'
 
 #RVM, Bundler
-require "capistrano-rbenv"
 require "bundler/capistrano"
+require "capistrano-rbenv"
+require 'holepicker/capistrano'
 require "recipes0/database_yml"
-#require "recipes0/assets"
-require "recipes0/nginx"
-require "recipes0/init_d/unicorn"
-#require "recipes0/init_d/delayed_job"
 require "recipes0/db/pg"
+require "recipes0/init_d/unicorn"
+require "recipes0/nginx"
 
 #Newrelic
 #require 'new_relic/recipes'
